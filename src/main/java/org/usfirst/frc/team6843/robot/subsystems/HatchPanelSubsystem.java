@@ -32,8 +32,8 @@ public class HatchPanelSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private Compressor AlwaysOff = new Compressor(0);//RobotMap.HATCH_COMPRESSOR_1);
-  private Solenoid HatchJaws = new Solenoid(7);
+  private Compressor AlwaysOff = new Compressor(RobotMap.COMPRESSOR);
+  private Solenoid HatchJaws = new Solenoid(RobotMap.JAWS_SOLENOID);
   private DigitalInput LS1 = new DigitalInput(RobotMap.LIGHT_SENSOR_1);
   private DigitalInput LS2 = new DigitalInput(RobotMap.LIGHT_SENSOR_2);
   private DigitalInput LS3 = new DigitalInput(RobotMap.LIGHT_SENSOR_3);
