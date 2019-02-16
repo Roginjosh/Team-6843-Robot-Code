@@ -43,6 +43,7 @@ public class HatchPanelSubsystem extends Subsystem {
   private AnalogTrigger linearEncoderOutput = new AnalogTrigger(0);
   private Counter linearEncoder = new Counter(linearEncoderOutput);
   private WPI_TalonSRX linearSlideMotor = new WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
+  private DoubleSolenoid MechanismEngage = new DoubleSolenoid(7,8);
   ///private Encoder linearEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   
   
@@ -119,6 +120,7 @@ public class HatchPanelSubsystem extends Subsystem {
   public void updateDashboard(){
     SmartDashboard.putNumber("Distance from Home of Tape", distanceToGoal());
     SmartDashboard.putNumber("Distance", linearDistance());
+    SmartDashboard.putBoolean("The Mechanism is Forward", mechanismForward());
   }
 
   public void jawsOff(){
@@ -153,6 +155,20 @@ public class HatchPanelSubsystem extends Subsystem {
     linearEncoder.clearDownSource();
   }
 
+  public boolean mechanismForward(){
+    if(MechanismEngage.get() == Value.kForward){
+      return true;
+    } else {
+      return false;
+    }
+  }
   
+  public void ToggleMechanism(){
+    if(mechanismForward()){
+      MechanismEngage.set(Value.kReverse);
+    } else {
+      MechanismEngage.set(Value.kForward);
+    }
+  }
 
 }

@@ -7,12 +7,17 @@
 
 package org.usfirst.frc.team6843.robot.commands;
 
+import org.usfirst.frc.team6843.robot.Robot;
+import org.usfirst.frc.team6843.robot.subsystems.HatchPanelSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveLiftForward extends Command {
-  public DriveLiftForward() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class ToggleHatchMechanism extends Command {
+    protected HatchPanelSubsystem hatchPanelSubsystem;
+
+  public ToggleHatchMechanism() {
+    this.hatchPanelSubsystem = Robot.getInstance().getHatchPanelSubsystem();
+    requires(hatchPanelSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -23,12 +28,13 @@ public class DriveLiftForward extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    this.hatchPanelSubsystem.ToggleMechanism();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

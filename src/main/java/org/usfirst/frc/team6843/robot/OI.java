@@ -15,9 +15,13 @@ import org.usfirst.frc.team6843.robot.commands.RaiseFront;
 import org.usfirst.frc.team6843.robot.commands.RaiseRear;
 import org.usfirst.frc.team6843.robot.commands.LowerRear;
 import org.usfirst.frc.team6843.robot.commands.RotateTo;
+import org.usfirst.frc.team6843.robot.commands.ToggleFrontLegs;
+import org.usfirst.frc.team6843.robot.commands.ToggleHatchMechanism;
 import org.usfirst.frc.team6843.robot.commands.ToggleLimitTest;
+import org.usfirst.frc.team6843.robot.commands.ToggleRearLegs;
 import org.usfirst.frc.team6843.robot.commands.OpenJaws;
 import org.usfirst.frc.team6843.robot.commands.CloseJaws;
+import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
 import org.usfirst.frc.team6843.robot.commands.DriveToTarget;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
@@ -88,14 +92,13 @@ public class OI {
 		driverPOV90.whenPressed(new ResetGyro());
 
 		//below this line is for secondary controller
-		secondaryY.whenPressed(new RaiseFront());
-		secondaryB.whenPressed(new LowerFront());
-		secondaryA.whenPressed(new ToggleLimitTest());
-		secondaryX.whenPressed(new PneumaticsOff());
-		secondaryBumperLeft.whenPressed(new RaiseRear());
-		secondaryBumperRight.whenPressed(new LowerRear());
-		secondaryBack.whenPressed(new OpenJaws());
-		secondaryStart.whenPressed(new CloseJaws());
+
+		secondaryY.whenPressed(new ToggleHatchMechanism());
+		secondaryB.whenPressed(new OpenJaws());
+		secondaryA.whenPressed(new DriveCarriageFor(5));
+		secondaryX.whenPressed(new CloseJaws());
+		secondaryBumperLeft.whenPressed(new ToggleRearLegs());
+		secondaryBumperRight.whenPressed(new ToggleFrontLegs());
 		
 
 	}

@@ -110,5 +110,37 @@ public class ClimbingSubsystem extends Subsystem {
   public void driveTo(double position){
     LowerDriveMotor.set(ControlMode.Position, position);
   }
+  
+  public boolean isFrontDown(){
+    if(FrontLegs.get() == Value.kForward){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  public void ToggleFrontLegs(){
+    if(isFrontDown()){
+      FrontLegs.set(Value.kReverse);
+    } else {
+      FrontLegs.set(Value.kForward);
+    }
+  }
+
+  public boolean isRearDown(){
+    if(FrontLegs.get() == Value.kForward){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  public void ToggleRearLegs(){
+    if(isRearDown()){
+      FrontLegs.set(Value.kReverse);
+    } else {
+      FrontLegs.set(Value.kForward);
+    }
+  }
 
 }
