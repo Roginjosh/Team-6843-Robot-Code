@@ -39,7 +39,6 @@ public class Robot extends TimedRobot {
 	private Logger logger;
 	private SendableChooser<StartOrientation> startOrientationChooser;
 	private double startHeading = 0.0;
-	private double lastCompletedRotateTo = 0.0;
 	private SendableChooser<Command> auto_chooser;
 	private Command autonomousCommand;
 	
@@ -50,12 +49,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		/*
-		 * m_oi = new OI(); m_chooser.addDefault("Default Auto", new ExampleCommand());
-		 * // chooser.addObject("My Auto", new MyAutoCommand());
-		 * SmartDashboard.putData("Auto mode", m_chooser);
-		 */
-
 		INSTANCE = this;
 		this.logger = Logger.getLogger(this.getClass().getName());
 		this.driveSubsystem = new DriveSubsystem();
@@ -89,20 +82,6 @@ public class Robot extends TimedRobot {
 			throw new IllegalStateException("Robot.getLogger() was called before Robot.robotInit() was called.");
 		}
 		return this.logger;
-	}
-
-	/**
-	 * @return the last reported completed rotate to heading.
-	 */
-	public double getLastCompletedRotateTo() {
-		return this.lastCompletedRotateTo;
-	}
-
-	/**
-	 * @param lastCompletedRotateTo the latest completed rotate to target.
-	 */
-	public void setLastCompletedRotateTo(double lastCompletedRotateTo) {
-		this.lastCompletedRotateTo = lastCompletedRotateTo;
 	}
 
 	public OI getOI() {
@@ -200,8 +179,21 @@ public class Robot extends TimedRobot {
 		
 	}
 
+	/**
+	 * Used from teleop and auto init to read from chooser.
+	 */
 	private void updateStartingHeading() {
 		StartOrientation orientation = startOrientationChooser.getSelected();
+		this.updateStartingHeading(orientation);
+	}
+
+	/**
+	 * Update the starting orientation. The only reason to use this during a match
+	 * is for a gyro reset.
+	 * 
+	 * @param orientation the new orientation.
+	 */
+	public void updateStartingHeading(StartOrientation orientation) {
 		switch (orientation) {
 		case FORWARD:
 			this.startHeading = 0.0;

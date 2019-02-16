@@ -18,9 +18,7 @@ import java.util.List;
 public class RobotMap {
 	//CAN Bus
 	public static final int LEFT_MOTOR_1 = 10;
-//	public static final int LEFT_MOTOR_2 = 11;
 	public static final int RIGHT_MOTOR_1 = 12;
-//	public static final int RIGHT_MOTOR_2 = 13;
 	public static final int HATCH_SLIDE_MOTOR = 14;
 	public static final int LOWER_DRIVE_MOTOR_1 = 15;
 	public static final int COMPRESSOR = 0;

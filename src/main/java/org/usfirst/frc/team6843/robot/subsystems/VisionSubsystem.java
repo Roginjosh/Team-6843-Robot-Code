@@ -54,6 +54,9 @@ public class VisionSubsystem extends Subsystem {
     SmartDashboard.putNumber("Target inches distance", this.targetInchesDistance);
   }
 
+  /**
+   * Configures the camera and starts the vision pipeline processing thread.
+   */
   public VisionSubsystem() {
     final UsbCamera visionCamera = CameraServer.getInstance().startAutomaticCapture(0);
 
@@ -122,7 +125,6 @@ public class VisionSubsystem extends Subsystem {
         if (this.threadMiscount > 5) {
           setTargetData(false, 0.0, 0);
         }
-        SmartDashboard.putNumber("Target Angle", getTargetAngle());
         SmartDashboard.putNumber("Target Miss Count", this.threadMiscount);
         VisionThread.sleep(100);
       } catch (Throwable e) {
@@ -133,24 +135,50 @@ public class VisionSubsystem extends Subsystem {
     visionThread.start();
   }
 
+  /**
+   * Returns true of the vision data from the thread represents good (seen and
+   * processed) vision data.
+   * 
+   * @return true if we have good data.
+   */
   public boolean isTargetDataGood() {
     synchronized (targetDataLock) {
       return this.targetDataGood;
     }
   }
 
+  /**
+   * If {@link VisionSubsystem#isTargetDataGood()} returns true, this method
+   * returns the good target angle. Otherwise, it returns 0.0.
+   * 
+   * @return the good target angle or 0.0.
+   */
   public double getTargetAngle() {
     synchronized (targetDataLock) {
       return this.targetAngle;
     }
   }
 
+  /**
+   * If {@link VisionSubsystem#isTargetDataGood()} returns true, this method
+   * returns the good pixel height of the taller of the two tapes. Otherwise, it
+   * returns 0.
+   * 
+   * @return the good pixel height or 0.
+   */
   public int getTargetPixelHeight() {
     synchronized (targetDataLock) {
       return this.targetPixelHeight;
     }
   }
 
+  /**
+   * If {@link VisionSubsystem#isTargetDataGood()} returns true, this method
+   * returns a rough approximation of the target distance in inches. Otherwise, it
+   * returns 0.0.
+   * 
+   * @return the "good" target distance or 0.0.
+   */
   public double getTargetInchesDistance() {
     synchronized (targetDataLock) {
       return this.targetInchesDistance;
@@ -177,6 +205,13 @@ public class VisionSubsystem extends Subsystem {
     // No default command.
   }
 
+  /**
+   * Instances of this class are created for each contour that comes out of the
+   * pipeline. This types ordering is by the x value of the bounding rectangle.
+   * The result is a sort from left to right for further processing to find the
+   * right two contours. That processing is based on the {@link RotatedRect} that
+   * is contained in here.
+   */
   private static class LtoRSortableContour implements Comparable<LtoRSortableContour> {
     public final RotatedRect rrect;
     public final Rect rect;

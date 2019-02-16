@@ -20,11 +20,13 @@ import org.usfirst.frc.team6843.robot.commands.ToggleHatchMechanism;
 import org.usfirst.frc.team6843.robot.commands.ToggleLimitTest;
 import org.usfirst.frc.team6843.robot.commands.ToggleRearLegs;
 import org.usfirst.frc.team6843.robot.commands.OpenJaws;
+import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
 import org.usfirst.frc.team6843.robot.commands.CloseJaws;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
 import org.usfirst.frc.team6843.robot.commands.DriveToTarget;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
+import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -86,10 +88,9 @@ public class OI {
 		//driverBack.whileHeld(new DriveTillCancelled(false));
 		driverBack.whenPressed(new KillAll());
 		//driverStart.whileHeld(new DriveTillCancelled(true));
-		//driverStart.whenPressed(new ArcToTarget());
-		//driverStart.whenPressed(new CalcDriveToTarget());
-		driverStart.whileHeld(new DriveToTarget());
-		driverPOV90.whenPressed(new ResetGyro());
+		driverStart.whileHeld(new ApproachTarget());
+		driverStart.whenReleased(new ResetRotatedToTarget());
+		driverPOV90.whenPressed(new ResetGyro()); // TODO change to two button trigger
 
 		//below this line is for secondary controller
 
@@ -128,7 +129,10 @@ public class OI {
 	public double getSecondaryTriggerAxisValue() {
 		return secondary.getRawAxis(2);
 	}
-
+	
+	/**
+	 * A custom trigger to turn a throttle into a button.
+	 */
 	private static class ThrottleButton extends Trigger {
 		private final XboxController stick;
 		private final int axis;

@@ -12,6 +12,11 @@ import org.usfirst.frc.team6843.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Similar to {@link RotateTo} but pivots around one side or the
+ * other depending on direction of turn. This could be useful for
+ * automated driving. Still needs some testing.
+ */
 public class PivotTo extends Command {
 
   private final DriveSubsystem driveSubsystem;

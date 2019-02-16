@@ -12,6 +12,11 @@ public class DriveToTarget extends Command {
   private final VisionSubsystem visionSubsystem;
   private double targetInches;
 
+  /**
+   * Design to be the drive portion of {@link ApproachTarget}. This command drive
+   * for a short time while centering on the vision target. It is designed to end
+   * and start again several times while the approach button is held.
+   */
   public DriveToTarget() {
     this.driveSubsystem = Robot.getInstance().getDriveSubsystem();
     this.visionSubsystem = Robot.getInstance().getVisionSubsystem();
@@ -36,6 +41,7 @@ public class DriveToTarget extends Command {
   @Override
   protected void execute() {
     double speed = this.driveSubsystem.getDistDriveRate();
+    speed = Math.max(speed, 900.0);
     double targetAngle = this.visionSubsystem.getTargetAngle();
     double p = targetAngle < 0.0 ? 0.02 : 0.01;
     double turnRate = p * targetAngle;

@@ -32,14 +32,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveSubsystem extends Subsystem {
 	/** Suggested rotate in place velocity base for PID output math. */
 	public static final double ROTATE_VELOCITY_BASE = 1000.0;
-	/** TODO change for real base. */
-	public static final double LEFT_RIGHT_WHEEL_CENTER_TO_CENTER_INCHES = 23.5;
-	/** Ave speed for arc drive. */
-	public static final double ARC_MEAN_SPEED = 2000.0;
 	/** Convert inches to talon native units 1440 / 18.85 */
 	public static final double INCH_TO_CLICKS = 76.39;
-	private double arcLeftSpeed;
-	private double arcRightSpeed;
 
 	/** Holds the last PID calculated turn rate. */
 	private double gyroTurnRate = 0.0;
@@ -83,11 +77,7 @@ public class DriveSubsystem extends Subsystem {
 	private PIDController activeDistController = null;
 
 	private final WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_1);
-	// private final WPI_TalonSRX leftMotor2 = new
-	// WPI_TalonSRX(RobotMap.LEFT_MOTOR_2);
 	private final WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_1);
-	// private final WPI_TalonSRX rightMotor2 = new
-	// WPI_TalonSRX(RobotMap.RIGHT_MOTOR_2);
 
 	/**
 	 * Creates the components of the subsystem and initialized them all.
@@ -123,10 +113,7 @@ public class DriveSubsystem extends Subsystem {
 
 		leftMotor1.setNeutralMode(NeutralMode.Brake);
 		rightMotor1.setNeutralMode(NeutralMode.Brake);
-		// leftMotor1.set(ControlMode.PercentOutput, 0.0);
-		// leftMotor2.set(ControlMode.Follower, RobotMap.LEFT_MOTOR_1);
-		// rightMotor1.set(ControlMode.PercentOutput, 0.0);
-		// rightMotor2.set(ControlMode.Follower, RobotMap.RIGHT_MOTOR_1);
+
 		bigRotateController.setInputRange(-180.0, 180.0);
 		bigRotateController.setOutputRange(-1.0, 1.0);
 		bigRotateController.setAbsoluteTolerance(2.0);
@@ -150,6 +137,9 @@ public class DriveSubsystem extends Subsystem {
 		distSlowController.disable();
 	}
 
+	/**
+	 * Zeros the gyro yaw to 0.0.
+	 */
 	public void resetGyro() {
 		this.gyro.zeroYaw();
 	}
@@ -273,40 +263,6 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	/**
-	 * Used to initiate a PID controlled arc drive.
-	 */
-	public void startArc(double leftInches, double rightInches) {
-		this.distTarget = leftInches * INCH_TO_CLICKS;
-		clearEncoders();
-		double meanInches = (leftInches + rightInches) / 2;
-		this.arcLeftSpeed = leftInches / meanInches * ARC_MEAN_SPEED;
-		this.arcRightSpeed = -rightInches / meanInches * ARC_MEAN_SPEED;
-	}
-
-	/**
-	 * @return the left and right arc drive speeds.
-	 */
-	public double[] getArcDriveRates() {
-		return new double[] { this.arcLeftSpeed, this.arcRightSpeed };
-	}
-
-	/**
-	 * @return true if the left side has gone its distance.
-	 */
-	public boolean isArcOnTarget() {
-		return (leftMotor1.getSelectedSensorPosition(0) >= this.distTarget);
-	}
-
-	/**
-	 * Resets the arc speeds to 0.0;
-	 */
-	public void endArc() {
-		this.arcLeftSpeed = 0.0;
-		this.arcRightSpeed = 0.0;
-		this.distTarget = 0.0;
-	}
-
-	/**
 	 * Updates the dashboard with drive subsystem critical data.
 	 */
 	public void updateDashboard() {
@@ -315,19 +271,12 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Drive Right Encoder", rightMotor1.getSelectedSensorPosition(0));
 	}
 
-	public double getLeftPosition() {
-		double leftRawPos = leftMotor1.getSelectedSensorPosition(0);
-		double leftUnitPos = leftRawPos / 1440;
-		double leftInchPos = leftUnitPos * 18.85;
-		return leftInchPos;
-	}
-
 	/**
 	 * Resets the left and right encoders to 0 completed clicks.
 	 */
 	public void clearEncoders() {
-		rightMotor1.setSelectedSensorPosition(0, 0, 100);
-		leftMotor1.setSelectedSensorPosition(0, 0, 100);
+		rightMotor1.setSelectedSensorPosition(0, 0, 0);
+		leftMotor1.setSelectedSensorPosition(0, 0, 0);
 	}
 
 	/**
@@ -421,10 +370,8 @@ public class DriveSubsystem extends Subsystem {
 		@Override
 		public double pidGet() {
 			int leftRawPos = leftMotor1.getSelectedSensorPosition(0);
-			// right broken on old bot ... put back later
-			// int rightRawPos = -rightMotor1.getSelectedSensorPosition(0);
-			// int aveRawPos = (leftRawPos + rightRawPos) / 2;
-			int aveRawPos = leftRawPos;
+			int rightRawPos = -rightMotor1.getSelectedSensorPosition(0);
+			int aveRawPos = (leftRawPos + rightRawPos) / 2;
 			return aveRawPos;
 		}
 

@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
- * Kill all other running commands.
+ * Kill all other running commands. Useful for getting out of
+ * trouble with run away commands. Use with care.
  */
 public class KillAll extends Command {
   /**
