@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
@@ -32,18 +33,18 @@ public class HatchPanelSubsystem extends Subsystem {
   // here. Call these from Commands.
 
   private Compressor AlwaysOff = new Compressor(0);//RobotMap.HATCH_COMPRESSOR_1);
-  private DoubleSolenoid HatchJaws = new DoubleSolenoid(5,6);
-  private DigitalInput LS1 = new DigitalInput(0);
-  private DigitalInput LS2 = new DigitalInput(1);
-  private DigitalInput LS3 = new DigitalInput(2);
-  private DigitalInput LS4 = new DigitalInput(3);
-  private DigitalInput LS5 = new DigitalInput(4);
-  private DigitalInput LS6 = new DigitalInput(5);
-  private DigitalInput LS7 = new DigitalInput(6); 
+  private Solenoid HatchJaws = new Solenoid(7);
+  private DigitalInput LS1 = new DigitalInput(RobotMap.LIGHT_SENSOR_1);
+  private DigitalInput LS2 = new DigitalInput(RobotMap.LIGHT_SENSOR_2);
+  private DigitalInput LS3 = new DigitalInput(RobotMap.LIGHT_SENSOR_3);
+  private DigitalInput LS4 = new DigitalInput(RobotMap.LIGHT_SENSOR_4);
+  private DigitalInput LS5 = new DigitalInput(RobotMap.LIGHT_SENSOR_5);
+  private DigitalInput LS6 = new DigitalInput(RobotMap.LIGHT_SENSOR_6);
+  private DigitalInput LS7 = new DigitalInput(RobotMap.LIGHT_SENSOR_7); 
   private AnalogTrigger linearEncoderOutput = new AnalogTrigger(0);
   private Counter linearEncoder = new Counter(linearEncoderOutput);
   private WPI_TalonSRX linearSlideMotor = new WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
-  private DoubleSolenoid MechanismEngage = new DoubleSolenoid(7,8);
+  private DoubleSolenoid MechanismEngage = new DoubleSolenoid(RobotMap.HATCH_MECHANISM_TOGGLE_PORT_1, RobotMap.HATCH_MECHANISM_TOGGLE_PORT_2);
   ///private Encoder linearEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   
   
@@ -124,15 +125,15 @@ public class HatchPanelSubsystem extends Subsystem {
   }
 
   public void jawsOff(){
-    HatchJaws.set(Value.kOff);
+    HatchJaws.set(false);
   }
 
   public void openJaws() {
-    HatchJaws.set(Value.kForward);
+    HatchJaws.set(true);
   }
 
   public void closeJaws() {
-    HatchJaws.set(Value.kReverse);
+    HatchJaws.set(false);
   }
 
   /** 
@@ -169,6 +170,10 @@ public class HatchPanelSubsystem extends Subsystem {
     } else {
       MechanismEngage.set(Value.kForward);
     }
+  }
+
+  public void PullMechanism(){
+    MechanismEngage.set(Value.kReverse);
   }
 
 }

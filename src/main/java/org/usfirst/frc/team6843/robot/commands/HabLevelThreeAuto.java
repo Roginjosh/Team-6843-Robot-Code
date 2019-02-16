@@ -21,19 +21,14 @@ public class HabLevelThreeAuto extends CommandGroup {
    * Add your docs here.
    */
   public HabLevelThreeAuto() {
-
-    addSequential(new LimitDisengage());
-    addParallel(new RaiseFront());
-    addSequential(new RaiseRear());
-    addSequential(new DriveCarriageFor(5));
+    addSequential(new InitiateProtocolAlpha());
+    addSequential(new OpenJaws());
+    addSequential(new ToggleFrontLegs());
+    addParallel(new ToggleRearLegs());
+    addSequential(new DriveCarriageFor(5, .25));
     addSequential(new LowerFront());
-    /**
-     * add command to crawl forward until rear pneumatics 
-     * are against or close to HAB
-    */ 
+    addSequential(new DriveCarriageFor(5, .25));
     addSequential(new LowerRear());
-    /**
-     * add command to crawl forward until against driver wall
-     */
+    addSequential(new DriveTo(20));
   }
 }

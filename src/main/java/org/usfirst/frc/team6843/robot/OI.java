@@ -95,7 +95,7 @@ public class OI {
 
 		secondaryY.whenPressed(new ToggleHatchMechanism());
 		secondaryB.whenPressed(new OpenJaws());
-		secondaryA.whenPressed(new DriveCarriageFor(5));
+		secondaryA.whenPressed(new DriveCarriageFor(5, .25));
 		secondaryX.whenPressed(new CloseJaws());
 		secondaryBumperLeft.whenPressed(new ToggleRearLegs());
 		secondaryBumperRight.whenPressed(new ToggleFrontLegs());

@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team6843.robot;
 
+import java.util.List;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -14,12 +16,34 @@ package org.usfirst.frc.team6843.robot;
  * floating around.
  */
 public class RobotMap {
+	//CAN Bus
 	public static final int LEFT_MOTOR_1 = 10;
-//	public static final int LEFT_MOTOR_2 = 2;
+//	public static final int LEFT_MOTOR_2 = 11;
 	public static final int RIGHT_MOTOR_1 = 12;
-//	public static final int RIGHT_MOTOR_2 = 4;
+//	public static final int RIGHT_MOTOR_2 = 13;
 	public static final int HATCH_SLIDE_MOTOR = 14;
 	public static final int LOWER_DRIVE_MOTOR_1 = 15;
-	public static final int HATCH_COMPRESSOR_1 = 24;
-	public static final int CLIMB_COMPRESSOR_1 = 0;
-}
+	public static final int COMPRESSOR = 0;
+	//DIO Ports
+	public static final int LIGHT_SENSOR_1 = 0;
+	public static final int LIGHT_SENSOR_2 = 1;
+	public static final int LIGHT_SENSOR_3 = 2;
+	public static final int LIGHT_SENSOR_4 = 3;
+	public static final int LIGHT_SENSOR_5 = 4;
+	public static final int LIGHT_SENSOR_6 = 5;
+	public static final int LIGHT_SENSOR_7 = 6;
+	public static final int HATCH_LINEAR_ENCODER_PORT_1 = 7;
+	public static final int HATCH_LINEAR_ENCODER_PORT_2 = 8;
+	public static final int CARRIAGE_ULTRASONIC_PORT_1 = 9;
+	public static final int CARRIAGE_ULTRASONIC_PORT_2 = 10;
+	//PCM Ports
+	public static final int FRONT_LEGS_PORT_1 = 0;
+	public static final int FRONT_LEGS_PORT_2 = 1;
+	public static final int REAR_LEGS_PORT_1 = 2;
+	public static final int REAR_LEGS_PORT_2 = 3;
+	public static final int HATCH_MECHANISM_TOGGLE_PORT_1 = 4;
+	public static final int HATCH_MECHANISM_TOGGLE_PORT_2 = 5;
+	public static final int JAWS_SOLENOID = 6;
+	public static final int LIMIT_ENGAGER = 7;
+
+	}

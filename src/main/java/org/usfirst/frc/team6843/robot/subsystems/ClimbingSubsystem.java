@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
@@ -28,11 +29,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class ClimbingSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private Compressor Compressor = new Compressor(RobotMap.CLIMB_COMPRESSOR_1);
-  private DoubleSolenoid FrontLegs = new DoubleSolenoid(1, 0);
-  private DoubleSolenoid RearLegs = new DoubleSolenoid(2, 3);
-  private Solenoid SpikeLimit = new Solenoid(4);
+  private Compressor Compressor = new Compressor(RobotMap.COMPRESSOR);
+  private DoubleSolenoid FrontLegs = new DoubleSolenoid(RobotMap.FRONT_LEGS_PORT_1, RobotMap.FRONT_LEGS_PORT_2);
+  private DoubleSolenoid RearLegs = new DoubleSolenoid(RobotMap.REAR_LEGS_PORT_1, RobotMap.REAR_LEGS_PORT_2);
+  private Solenoid SpikeLimit = new Solenoid(RobotMap.LIMIT_ENGAGER);
   private final WPI_TalonSRX LowerDriveMotor = new WPI_TalonSRX(RobotMap.LOWER_DRIVE_MOTOR_1);
+  private Ultrasonic carriageSonic = new Ultrasonic(RobotMap.CARRIAGE_ULTRASONIC_PORT_1, RobotMap.CARRIAGE_ULTRASONIC_PORT_2);
 
   public ClimbingSubsystem(){
     LowerDriveMotor.setNeutralMode(NeutralMode.Brake);
