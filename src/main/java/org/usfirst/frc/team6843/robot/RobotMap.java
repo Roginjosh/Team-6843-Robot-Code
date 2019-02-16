@@ -36,6 +36,7 @@ public class RobotMap {
 	public static final int HATCH_LINEAR_ENCODER_PORT_2 = 8;
 	public static final int CARRIAGE_ULTRASONIC_PORT_1 = 9;
 	public static final int CARRIAGE_ULTRASONIC_PORT_2 = 10;
+	public static final int LIMIT_ENGAGER = 11;
 	//PCM Ports
 	public static final int FRONT_LEGS_PORT_1 = 0;
 	public static final int FRONT_LEGS_PORT_2 = 1;
@@ -44,6 +45,6 @@ public class RobotMap {
 	public static final int HATCH_MECHANISM_TOGGLE_PORT_1 = 4;
 	public static final int HATCH_MECHANISM_TOGGLE_PORT_2 = 5;
 	public static final int JAWS_SOLENOID = 6;
-	public static final int LIMIT_ENGAGER = 7;
+	
 
 	}
