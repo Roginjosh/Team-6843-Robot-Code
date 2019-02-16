@@ -145,4 +145,16 @@ public class ClimbingSubsystem extends Subsystem {
     }
   }
 
+  public void driveUntil(double limit){
+    if (carriageSonic.getRangeInches() <= limit) {
+      LowerDriveMotor.set(ControlMode.PercentOutput, .25);
+    } else {
+      LowerDriveMotor.set(ControlMode.PercentOutput, 0);
+    }
+  }
+
+  public double getInchesFromWall(){
+    return carriageSonic.getRangeInches();
+  }
+
 }

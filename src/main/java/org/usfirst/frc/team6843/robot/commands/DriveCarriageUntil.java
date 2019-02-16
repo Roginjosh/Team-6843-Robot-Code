@@ -14,11 +14,12 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCarriageUntil extends Command {
   protected ClimbingSubsystem climbingSubsystem;
+  double inches;
 
-  public DriveCarriageUntil() {
+  public DriveCarriageUntil(double inchesFromWall) {
     this.climbingSubsystem = Robot.getInstance().getClimbingSubsystem();
     requires(climbingSubsystem);
-    
+    this.inches = inchesFromWall;
   }
 
   // Called just before this Command runs the first time
@@ -29,12 +30,17 @@ public class DriveCarriageUntil extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    this.climbingSubsystem.driveUntil(inches);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if(this.climbingSubsystem.getInchesFromWall() <= inches) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Called once after isFinished returns true

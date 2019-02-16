@@ -9,11 +9,11 @@ package org.usfirst.frc.team6843.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class InitiateProtocolAlpha extends CommandGroup {
+public class InitiateAlphaProtocol extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public InitiateProtocolAlpha() {
+  public InitiateAlphaProtocol() {
     addSequential(new LimitDisengage());
     addParallel(new LowerFront());
     addParallel(new LowerRear());
