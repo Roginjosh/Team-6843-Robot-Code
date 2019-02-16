@@ -18,10 +18,15 @@ import org.usfirst.frc.team6843.robot.commands.RotateTo;
 import org.usfirst.frc.team6843.robot.commands.ToggleLimitTest;
 import org.usfirst.frc.team6843.robot.commands.OpenJaws;
 import org.usfirst.frc.team6843.robot.commands.CloseJaws;
+import org.usfirst.frc.team6843.robot.commands.DriveToTarget;
+import org.usfirst.frc.team6843.robot.commands.KillAll;
+import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -33,6 +38,11 @@ public class OI {
 	public static final int DRIVE_AXIS = 1;
 	public static final int CURVE_AXIS = 4;
 
+	/** Use these to turn the front throttles into buttons. */
+	private static final int LEFT_FRONT_THROTTLE = 2;
+	private static final int RIGHT_FRONT_THROTTLE = 3;
+	private static final double THROTTLE_AS_BUTTON_THRESHOLD = 0.5;
+
 	private final XboxController driver = new XboxController(0); 
 	// The above line ^ creates a new controller on USB port 0, or the first controller plugged in
 	private final Button driverY = new JoystickButton(driver, 4);
@@ -43,6 +53,9 @@ public class OI {
 	private final Button driverBumperRight = new JoystickButton(driver, 6);
 	private final Button driverBack = new JoystickButton(driver, 7);
 	private final Button driverStart = new JoystickButton(driver, 8);
+	private final Trigger driverLeftThrottleButton = new ThrottleButton(driver, LEFT_FRONT_THROTTLE);
+	private final Trigger driverRightThrottleButton = new ThrottleButton(driver, RIGHT_FRONT_THROTTLE);
+	private final Button driverPOV90 = new POVButton(driver, 90);
 
 	private final XboxController secondary = new XboxController(1);
 	private final Button secondaryY = new JoystickButton(driver, 4);
@@ -59,11 +72,21 @@ public class OI {
 		driverB.whenPressed(new RotateTo(90.0));
 		driverA.whenPressed(new RotateTo(180.0));
 		driverX.whenPressed(new RotateTo(-90.0));
-		driverBumperLeft.whileHeld(new DriveTillCancelled(true));
-		driverBumperRight.whileHeld(new DriveTillCancelled(false));
-		driverBack.whenPressed(new DriveTo(-100));
-		driverStart.whenPressed(new DriveTo(100));
+		driverBumperLeft.whenPressed(new RotateTo(-28.75)); // Near left rocket
+		driverLeftThrottleButton.whenActive(new RotateTo(-151.25)); // Far left rocket
+		driverBumperRight.whenPressed(new RotateTo(28.75)); // Near right rocket
+		driverRightThrottleButton.whenActive(new RotateTo(151.25)); // Far right rocket
 		
+		//driverBack.whenPressed(new DriveTo(-100));
+		//driverStart.whenPressed(new DriveTo(100));
+		//driverBack.whileHeld(new DriveTillCancelled(false));
+		driverBack.whenPressed(new KillAll());
+		//driverStart.whileHeld(new DriveTillCancelled(true));
+		//driverStart.whenPressed(new ArcToTarget());
+		//driverStart.whenPressed(new CalcDriveToTarget());
+		driverStart.whileHeld(new DriveToTarget());
+		driverPOV90.whenPressed(new ResetGyro());
+
 		//below this line is for secondary controller
 		secondaryY.whenPressed(new RaiseFront());
 		secondaryB.whenPressed(new LowerFront());
@@ -82,8 +105,7 @@ public class OI {
 	 */
 	public double getDrivePower() {
 		double drivePower = -driver.getRawAxis(DRIVE_AXIS);
-		if (Math.abs(drivePower) < DEAD_ZONE)
-		{
+		if (Math.abs(drivePower) < DEAD_ZONE) {
 			drivePower = 0.0;
 		}
 		return Math.pow(drivePower, 3.0);
@@ -94,8 +116,7 @@ public class OI {
 	 */
 	public double getCurvePower() {
 		double curvePower = driver.getRawAxis(CURVE_AXIS);
-		if (Math.abs(curvePower) < DEAD_ZONE)
-		{
+		if (Math.abs(curvePower) < DEAD_ZONE) {
 			curvePower = 0.0;
 		}
 		return Math.pow(curvePower, 5.0);
@@ -103,5 +124,19 @@ public class OI {
 
 	public double getSecondaryTriggerAxisValue() {
 		return secondary.getRawAxis(2);
+	}
+
+	private static class ThrottleButton extends Trigger {
+		private final XboxController stick;
+		private final int axis;
+
+		public ThrottleButton(final XboxController stick, int axis) {
+			this.stick = stick;
+			this.axis = axis;
+		}
+
+		public boolean get() {
+			return Math.abs(this.stick.getRawAxis(this.axis)) > THROTTLE_AS_BUTTON_THRESHOLD;
+		}
 	}
 }

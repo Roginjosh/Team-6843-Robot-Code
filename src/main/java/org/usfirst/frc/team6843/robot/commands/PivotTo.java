@@ -12,14 +12,14 @@ import org.usfirst.frc.team6843.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RotateTo extends Command {
+public class PivotTo extends Command {
 
   private final DriveSubsystem driveSubsystem;
   private final double targetHeading;
   private static final int ON_TARGET_TARGET = 5;
   private int onTargetCount;
 
-  public RotateTo(double targetHeading) {
+  public PivotTo(double targetHeading) {
     super();
     this.driveSubsystem = Robot.getInstance().getDriveSubsystem();
     requires(this.driveSubsystem);
@@ -38,7 +38,11 @@ public class RotateTo extends Command {
   @Override
   protected void execute() {
     double speed = DriveSubsystem.ROTATE_VELOCITY_BASE * this.driveSubsystem.getGyroTurnRate();
-    this.driveSubsystem.velocityDrive(speed, speed);
+    if (speed > 0.0) {
+      this.driveSubsystem.velocityDrive(speed, 0.0);
+    } else {
+      this.driveSubsystem.velocityDrive(0.0, speed);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -54,8 +58,6 @@ public class RotateTo extends Command {
       this.onTargetCount++;
       if (this.onTargetCount < ON_TARGET_TARGET) {
         onTarget = false;
-      } else {
-        Robot.getInstance().setLastCompletedRotateTo(this.targetHeading);
       }
     }
     return onTarget;

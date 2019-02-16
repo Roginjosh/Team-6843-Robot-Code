@@ -13,11 +13,13 @@ import org.usfirst.frc.team6843.robot.commands.DriveTo;
 import org.usfirst.frc.team6843.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team6843.robot.subsystems.HatchPanelSubsystem;
 import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
+import org.usfirst.frc.team6843.robot.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,10 +34,15 @@ public class Robot extends TimedRobot {
 	private DriveSubsystem driveSubsystem;
 	private ClimbingSubsystem climbingSubsystem;
 	private HatchPanelSubsystem hatchPanelSubsystem;
+	private VisionSubsystem visionSubsystem;
 	private OI oi;
 	private Logger logger;
+	private SendableChooser<StartOrientation> startOrientationChooser;
+	private double startHeading = 0.0;
+	private double lastCompletedRotateTo = 0.0;
 	private SendableChooser<Command> auto_chooser;
 	private Command autonomousCommand;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -54,14 +61,20 @@ public class Robot extends TimedRobot {
 		this.driveSubsystem = new DriveSubsystem();
 		this.climbingSubsystem = new ClimbingSubsystem();
 		this.hatchPanelSubsystem = new HatchPanelSubsystem();
+		this.visionSubsystem = new VisionSubsystem();
 		this.oi = new OI();
 		this.auto_chooser = new SendableChooser<>();
-		this.auto_chooser.setName("Auto");
 		this.auto_chooser.setDefaultOption("Drive 3 pts", new DriveTo(50.0));
 		this.auto_chooser.addOption("Drive too far", new DriveTo(100.0));
+		SmartDashboard.putData("Auto Select", this.auto_chooser);
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// SmartDashboard.putData("Auto mode", auto_chooser);
-
+		this.startOrientationChooser = new SendableChooser<>();
+		this.startOrientationChooser.setDefaultOption("Backward", StartOrientation.BACKWARD);
+		this.startOrientationChooser.addOption("Forward", StartOrientation.FORWARD);
+		this.startOrientationChooser.addOption("Left", StartOrientation.LEFT);
+		this.startOrientationChooser.addOption("Right", StartOrientation.RIGHT);
+		SmartDashboard.putData("Start orientation", this.startOrientationChooser);
 	}
 
 	public static Robot getInstance() {
@@ -76,6 +89,20 @@ public class Robot extends TimedRobot {
 			throw new IllegalStateException("Robot.getLogger() was called before Robot.robotInit() was called.");
 		}
 		return this.logger;
+	}
+
+	/**
+	 * @return the last reported completed rotate to heading.
+	 */
+	public double getLastCompletedRotateTo() {
+		return this.lastCompletedRotateTo;
+	}
+
+	/**
+	 * @param lastCompletedRotateTo the latest completed rotate to target.
+	 */
+	public void setLastCompletedRotateTo(double lastCompletedRotateTo) {
+		this.lastCompletedRotateTo = lastCompletedRotateTo;
 	}
 
 	public OI getOI() {
@@ -109,11 +136,29 @@ public class Robot extends TimedRobot {
 		return this.hatchPanelSubsystem;
 	}
 
+	public VisionSubsystem getVisionSubsystem() {
+		if (this.visionSubsystem == null) {
+			throw new IllegalStateException(
+					"Robot.getVisionSubsystem() was called before Robot.robotInit() was called.");
+		}
+		return this.visionSubsystem;
+	}
+
+	/**
+	 * Note that this is not accurate until after {@link #autonomousInit()}.
+	 * 
+	 * @return the starting heading according to the auto selections.
+	 */
+	public double getStartHeading() {
+		return startHeading;
+	}
+
 	@Override
 	public void robotPeriodic() {
 		getDriveSubsystem().updateDashboard();
 		getHatchPanelSubsystem().updateDashboard();
 		getClimbingSubsystem().updateDashboard();
+		getVisionSubsystem().updateDashboard();
 	}
 
 	/**
@@ -145,18 +190,33 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		updateStartingHeading();
+
 		autonomousCommand = auto_chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
-		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-		 * ExampleCommand(); break; }
-		 */
-
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
+		}
+		
+	}
+
+	private void updateStartingHeading() {
+		StartOrientation orientation = startOrientationChooser.getSelected();
+		switch (orientation) {
+		case FORWARD:
+			this.startHeading = 0.0;
+			break;
+		case BACKWARD:
+			this.startHeading = 180.0;
+			break;
+		case LEFT:
+			this.startHeading = -90.0;
+			break;
+		case RIGHT:
+			this.startHeading = 90.0;
+			break;
+		default:
+			this.startHeading = 180.0;
 		}
 	}
 
@@ -177,6 +237,7 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		updateStartingHeading();
 	}
 
 	/**
@@ -192,5 +253,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+
+	public static enum StartOrientation {
+		FORWARD, BACKWARD, LEFT, RIGHT;
 	}
 }
