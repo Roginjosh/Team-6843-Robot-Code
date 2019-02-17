@@ -16,7 +16,6 @@ import org.usfirst.frc.team6843.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogTrigger;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -30,7 +29,6 @@ public class HatchPanelSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private Compressor AlwaysOff = new Compressor(RobotMap.COMPRESSOR);
   private Solenoid HatchJaws = new Solenoid(RobotMap.JAWS_SOLENOID);
   private DigitalInput LS1 = new DigitalInput(RobotMap.LIGHT_SENSOR_1);
   private DigitalInput LS2 = new DigitalInput(RobotMap.LIGHT_SENSOR_2);
@@ -48,8 +46,6 @@ public class HatchPanelSubsystem extends Subsystem {
   
 
   public HatchPanelSubsystem(){
-    AlwaysOff.setClosedLoopControl(true);
-    //Turns off the compressor because we have no compressor on the compressor port of this PCM
     linearEncoderOutput.setLimitsVoltage(2, 2.6);
     /*
     linearEncoder.setMaxPeriod(.1);
