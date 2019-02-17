@@ -7,12 +7,10 @@
 
 package org.usfirst.frc.team6843.robot;
 
-import java.util.logging.Logger;
-
 import org.usfirst.frc.team6843.robot.commands.DriveTo;
+import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team6843.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team6843.robot.subsystems.HatchPanelSubsystem;
-import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team6843.robot.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -36,7 +34,6 @@ public class Robot extends TimedRobot {
 	private HatchPanelSubsystem hatchPanelSubsystem;
 	private VisionSubsystem visionSubsystem;
 	private OI oi;
-	private Logger logger;
 	private SendableChooser<StartOrientation> startOrientationChooser;
 	private double startHeading = 0.0;
 	private SendableChooser<Command> auto_chooser;
@@ -50,7 +47,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		INSTANCE = this;
-		this.logger = Logger.getLogger(this.getClass().getName());
 		this.driveSubsystem = new DriveSubsystem();
 		this.climbingSubsystem = new ClimbingSubsystem();
 		this.hatchPanelSubsystem = new HatchPanelSubsystem();
@@ -75,13 +71,6 @@ public class Robot extends TimedRobot {
 			throw new IllegalStateException("Robot.getInstance() was called before Robot.robotInit() was called.");
 		}
 		return INSTANCE;
-	}
-
-	public Logger getLogger() {
-		if (this.logger == null) {
-			throw new IllegalStateException("Robot.getLogger() was called before Robot.robotInit() was called.");
-		}
-		return this.logger;
 	}
 
 	public OI getOI() {

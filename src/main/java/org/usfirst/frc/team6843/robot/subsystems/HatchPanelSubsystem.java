@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc.team6843.robot.RobotMap;
+import org.usfirst.frc.team6843.robot.commands.MoveHatchMechanism;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogTrigger;
@@ -57,8 +58,7 @@ public class HatchPanelSubsystem extends Subsystem {
   
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new MoveHatchMechanism());
   }
 
   public double distanceToGoal() {
@@ -90,6 +90,9 @@ public class HatchPanelSubsystem extends Subsystem {
     if(!LS7.get()){
       temp += 3;
       amttemp++;
+    }
+    if (amttemp == 0) {
+      return 0;
     }
     distance = interval * (temp / amttemp);
     return distance;

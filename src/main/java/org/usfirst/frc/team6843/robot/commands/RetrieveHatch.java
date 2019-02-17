@@ -9,16 +9,18 @@ package org.usfirst.frc.team6843.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreHatch extends CommandGroup {
+public class RetrieveHatch extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ScoreHatch() {
-    
-    addSequential(new ToggleHatchMechanism());
+  public RetrieveHatch() {
     addSequential(new CloseJaws());
+    addSequential(new ToggleHatchMechanism());
+    addSequential(new OpenJaws());
     addParallel(new ToggleHatchMechanism());
-    addSequential(new DriveTo(-12.0));
+    addSequential(new DriveTo(-15.0));
+    addSequential(new RotateTo(0.0));
+
     
     
     // Add Commands here:
