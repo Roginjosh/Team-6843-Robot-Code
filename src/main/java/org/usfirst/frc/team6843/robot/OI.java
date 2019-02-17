@@ -7,23 +7,16 @@
 
 package org.usfirst.frc.team6843.robot;
 
-import org.usfirst.frc.team6843.robot.commands.DriveTillCancelled;
-import org.usfirst.frc.team6843.robot.commands.DriveTo;
-import org.usfirst.frc.team6843.robot.commands.LowerFront;
-import org.usfirst.frc.team6843.robot.commands.PneumaticsOff;
-import org.usfirst.frc.team6843.robot.commands.RaiseFront;
-import org.usfirst.frc.team6843.robot.commands.RaiseRear;
-import org.usfirst.frc.team6843.robot.commands.LowerRear;
 import org.usfirst.frc.team6843.robot.commands.RotateTo;
 import org.usfirst.frc.team6843.robot.commands.ToggleFrontLegs;
 import org.usfirst.frc.team6843.robot.commands.ToggleHatchMechanism;
-import org.usfirst.frc.team6843.robot.commands.ToggleLimitTest;
 import org.usfirst.frc.team6843.robot.commands.ToggleRearLegs;
 import org.usfirst.frc.team6843.robot.commands.OpenJaws;
 import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
 import org.usfirst.frc.team6843.robot.commands.CloseJaws;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
-import org.usfirst.frc.team6843.robot.commands.DriveToTarget;
+import org.usfirst.frc.team6843.robot.commands.HabLevelThreeAuto;
+import org.usfirst.frc.team6843.robot.commands.InitiateAlphaProtocol;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
@@ -100,7 +93,9 @@ public class OI {
 		secondaryX.whenPressed(new CloseJaws());
 		secondaryBumperLeft.whenPressed(new ToggleRearLegs());
 		secondaryBumperRight.whenPressed(new ToggleFrontLegs());
-		
+		// The below two are temporary
+		secondaryBack.whenPressed(new HabLevelThreeAuto());
+		secondaryStart.whenPressed( new InitiateAlphaProtocol());
 
 	}
 

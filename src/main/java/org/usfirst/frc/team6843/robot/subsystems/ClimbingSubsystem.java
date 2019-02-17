@@ -18,10 +18,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -107,6 +105,7 @@ public class ClimbingSubsystem extends Subsystem {
 
   public void updateDashboard(){
     SmartDashboard.putBoolean("6in. Limit Engaged?", SpikeLimit.get());
+    SmartDashboard.putBoolean("Are Tanks Pressurized?", pressureSwitch());
   }
 
   public void drive(double speed){
@@ -161,6 +160,10 @@ public class ClimbingSubsystem extends Subsystem {
 
   public double getInchesFromWall(){
     return carriageSonic.getRangeInches();
+  }
+
+  public boolean pressureSwitch(){ // returns false if tanks are lower than 120psi
+    return ! Compressor.getPressureSwitchValue();
   }
 
 }

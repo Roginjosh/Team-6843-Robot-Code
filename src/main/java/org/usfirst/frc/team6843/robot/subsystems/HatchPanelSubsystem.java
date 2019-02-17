@@ -16,12 +16,10 @@ import org.usfirst.frc.team6843.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogTrigger;
-import edu.wpi.first.wpilibj.AnalogTriggerOutput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -50,6 +48,7 @@ public class HatchPanelSubsystem extends Subsystem {
   
 
   public HatchPanelSubsystem(){
+    AlwaysOff.setClosedLoopControl(true);
     //Turns off the compressor because we have no compressor on the compressor port of this PCM
     linearEncoderOutput.setLimitsVoltage(2, 2.6);
     /*
@@ -67,7 +66,7 @@ public class HatchPanelSubsystem extends Subsystem {
   }
 
   public double distanceToGoal() {
-    double temp = 0, distance = 0, amttemp = 0, goal = 0, interval = 1;
+    double temp = 0, distance = 0, amttemp = 0, interval = 1;
     if(!LS1.get()){
       temp += -3;
       amttemp++;

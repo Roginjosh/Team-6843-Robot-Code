@@ -7,13 +7,6 @@
 
 package org.usfirst.frc.team6843.robot.commands;
 
-import org.usfirst.frc.team6843.robot.commands.LimitDisengage;
-import org.usfirst.frc.team6843.robot.commands.LimitEngage;
-import org.usfirst.frc.team6843.robot.commands.RaiseRear;
-import org.usfirst.frc.team6843.robot.commands.RaiseFront;
-import org.usfirst.frc.team6843.robot.commands.LowerFront;
-import org.usfirst.frc.team6843.robot.commands.LowerRear;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class HabLevelThreeAuto extends CommandGroup {

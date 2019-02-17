@@ -12,8 +12,6 @@ import org.usfirst.frc.team6843.robot.Robot;
 
 import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MODriveLiftForward extends Command {
