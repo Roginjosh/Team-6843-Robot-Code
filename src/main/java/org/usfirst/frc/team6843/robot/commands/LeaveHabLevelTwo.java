@@ -20,7 +20,7 @@ public class LeaveHabLevelTwo extends CommandGroup {
     addSequential(new DriveCarriageUntil(12, false));
     addSequential(new ToggleFrontLegs());
     addSequential(new DriveCarriageUntil(30, false));
-    addSequential(new ToggleFrontLegs());
-    addParallel(new ToggleRearLegs());
+    addParallel(new ToggleFrontLegs());
+    addSequential(new ToggleRearLegs());
   }
 }
