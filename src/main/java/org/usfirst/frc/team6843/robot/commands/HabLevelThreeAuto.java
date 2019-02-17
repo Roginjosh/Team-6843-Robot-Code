@@ -25,9 +25,9 @@ public class HabLevelThreeAuto extends CommandGroup {
     addSequential(new OpenJaws());
     addSequential(new ToggleFrontLegs());
     addParallel(new ToggleRearLegs());
-    addSequential(new DriveCarriageUntil(18));
+    addSequential(new DriveCarriageUntil(18, true));
     addSequential(new ToggleFrontLegs());
-    addSequential(new DriveCarriageUntil(2));
+    addSequential(new DriveCarriageUntil(2, true));
     addSequential(new ToggleRearLegs());
     addSequential(new DriveTo(20));
   }

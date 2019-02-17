@@ -9,17 +9,18 @@ package org.usfirst.frc.team6843.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class InitiateAlphaProtocol extends CommandGroup {
+public class LeaveHabLevelTwo extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public InitiateAlphaProtocol() {
-    addSequential(new LimitDisengage());
-    addParallel(new RaiseFront());
-    addParallel(new RaiseRear());
-    addParallel(new PullHatchMechanism());
-    addParallel(new CloseJaws());
-
-
+  public LeaveHabLevelTwo() {
+    addSequential(new InitiateAlphaProtocol());
+    addSequential(new DriveTo(-8));
+    addSequential(new ToggleRearLegs());
+    addSequential(new DriveCarriageUntil(12, false));
+    addSequential(new ToggleFrontLegs());
+    addSequential(new DriveCarriageUntil(30, false));
+    addSequential(new ToggleFrontLegs());
+    addParallel(new ToggleRearLegs());
   }
 }
