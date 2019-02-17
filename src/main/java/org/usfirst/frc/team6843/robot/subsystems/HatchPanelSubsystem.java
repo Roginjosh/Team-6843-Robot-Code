@@ -104,8 +104,9 @@ public class HatchPanelSubsystem extends Subsystem {
 
     } else if(!atGoal() && (distanceToGoal() > 0)){
       linearSlideMotor.set(ControlMode.PercentOutput, -.75);
-
-    }                  
+    } else {
+      linearSlideMotor.set(ControlMode.PercentOutput, 0.0);
+    }               
   }    
 
   public boolean atGoal(){
