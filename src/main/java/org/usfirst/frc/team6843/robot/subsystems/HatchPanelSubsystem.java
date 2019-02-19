@@ -17,6 +17,7 @@ import org.usfirst.frc.team6843.robot.commands.MoveHatchMechanism;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogTrigger;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -29,7 +30,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class HatchPanelSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
+  private Compressor compressor = new Compressor(RobotMap.COMPRESSOR);
   private Solenoid HatchJaws = new Solenoid(RobotMap.JAWS_SOLENOID);
   private DigitalInput LS1 = new DigitalInput(RobotMap.LIGHT_SENSOR_1);
   private DigitalInput LS2 = new DigitalInput(RobotMap.LIGHT_SENSOR_2);
@@ -41,13 +42,14 @@ public class HatchPanelSubsystem extends Subsystem {
   private AnalogTrigger linearEncoderOutput = new AnalogTrigger(0);
   private Counter linearEncoder = new Counter(linearEncoderOutput);
   private WPI_TalonSRX linearSlideMotor = new WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
-  private DoubleSolenoid MechanismEngage = new DoubleSolenoid(RobotMap.HATCH_MECHANISM_TOGGLE_PORT_1, RobotMap.HATCH_MECHANISM_TOGGLE_PORT_2);
+  private DoubleSolenoid MechanismEngage = new DoubleSolenoid(4, 5); //RobotMap.HATCH_MECHANISM_TOGGLE_PORT_1, RobotMap.HATCH_MECHANISM_TOGGLE_PORT_2);
   ///private Encoder linearEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   
   
 
   public HatchPanelSubsystem(){
     linearEncoderOutput.setLimitsVoltage(2, 2.6);
+    compressor.setClosedLoopControl(true);
     /*
     linearEncoder.setMaxPeriod(.1);
     linearEncoder.setMinRate(10);

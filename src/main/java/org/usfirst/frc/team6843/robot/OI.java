@@ -8,16 +8,20 @@
 package org.usfirst.frc.team6843.robot;
 
 import org.usfirst.frc.team6843.robot.commands.RotateTo;
-import org.usfirst.frc.team6843.robot.commands.ToggleFrontLegs;
 import org.usfirst.frc.team6843.robot.commands.ToggleHatchMechanism;
-import org.usfirst.frc.team6843.robot.commands.ToggleRearLegs;
 import org.usfirst.frc.team6843.robot.commands.OpenJaws;
+import org.usfirst.frc.team6843.robot.commands.RaiseFront;
+import org.usfirst.frc.team6843.robot.commands.RaiseFrontAndRear;
+import org.usfirst.frc.team6843.robot.commands.RaiseRear;
 import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
 import org.usfirst.frc.team6843.robot.commands.CloseJaws;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
 import org.usfirst.frc.team6843.robot.commands.HabLevelThreeAuto;
 import org.usfirst.frc.team6843.robot.commands.InitiateAlphaProtocol;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
+import org.usfirst.frc.team6843.robot.commands.LowerFront;
+import org.usfirst.frc.team6843.robot.commands.LowerFrontAndRear;
+import org.usfirst.frc.team6843.robot.commands.LowerRear;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
 
@@ -57,14 +61,14 @@ public class OI {
 	private final Button driverPOV90 = new POVButton(driver, 90);
 
 	private final XboxController secondary = new XboxController(1);
-	private final Button secondaryY = new JoystickButton(driver, 4);
-	private final Button secondaryB = new JoystickButton(driver, 2);
-	private final Button secondaryA = new JoystickButton(driver, 1);
-	private final Button secondaryX = new JoystickButton(driver, 3);
-	private final Button secondaryBumperLeft = new JoystickButton(driver, 5);
-	private final Button secondaryBumperRight = new JoystickButton(driver, 6);
-	private final Button secondaryBack = new JoystickButton(driver, 7);
-	private final Button secondaryStart = new JoystickButton(driver, 8);
+	private final Button secondaryY = new JoystickButton(secondary, 4);
+	private final Button secondaryB = new JoystickButton(secondary, 2);
+	private final Button secondaryA = new JoystickButton(secondary, 1);
+	private final Button secondaryX = new JoystickButton(secondary, 3);
+	private final Button secondaryBumperLeft = new JoystickButton(secondary, 5);
+	private final Button secondaryBumperRight = new JoystickButton(secondary, 6);
+	private final Button secondaryBack = new JoystickButton(secondary, 7);
+	private final Button secondaryStart = new JoystickButton(secondary, 8);
 
 	public OI() { // this is where you assign commands to buttons
 		driverY.whenPressed(new RotateTo(0.0));
@@ -87,15 +91,15 @@ public class OI {
 
 		//below this line is for secondary controller
 
-		secondaryY.whenPressed(new ToggleHatchMechanism());
-		secondaryB.whenPressed(new OpenJaws());
-		secondaryA.whenPressed(new DriveCarriageFor(5, .25));
-		secondaryX.whenPressed(new CloseJaws());
-		secondaryBumperLeft.whenPressed(new ToggleRearLegs());
-		secondaryBumperRight.whenPressed(new ToggleFrontLegs());
+		secondaryY.whenPressed(new RaiseFront());//new ToggleHatchMechanism());
+		secondaryB.whenPressed(new RaiseRear());//(new OpenJaws());
+		secondaryA.whenPressed(new LowerRear());//whenPressed(new DriveCarriageFor(5, .25));
+		secondaryX.whenPressed(new LowerFront());
+		secondaryBumperLeft.whenPressed(new LowerFrontAndRear());
+		secondaryBumperRight.whenPressed(new RaiseFrontAndRear());
 		// The below two are temporary
-		secondaryBack.whenPressed(new HabLevelThreeAuto());
-		secondaryStart.whenPressed( new InitiateAlphaProtocol());
+		secondaryBack.whenPressed(new DriveCarriageFor(2, .5));//HabLevelThreeAuto());
+		secondaryStart.whenPressed( new DriveCarriageFor(2, -.5));//InitiateAlphaProtocol());
 
 	}
 

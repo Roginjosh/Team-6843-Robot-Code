@@ -37,8 +37,8 @@ public class RobotMap {
 	//PCM Ports
 	public static final int FRONT_LEGS_PORT_1 = 0;
 	public static final int FRONT_LEGS_PORT_2 = 1;
-	public static final int REAR_LEGS_PORT_1 = 2;
-	public static final int REAR_LEGS_PORT_2 = 3;
+	public static final int REAR_LEGS_PORT_1 = 3;
+	public static final int REAR_LEGS_PORT_2 = 2;
 	public static final int HATCH_MECHANISM_TOGGLE_PORT_1 = 4;
 	public static final int HATCH_MECHANISM_TOGGLE_PORT_2 = 5;
 	public static final int JAWS_SOLENOID = 6;

@@ -37,7 +37,7 @@ public class ClimbingSubsystem extends Subsystem {
   private DigitalOutput SpikeLimit = new DigitalOutput(RobotMap.LIMIT_ENGAGER);
   private final WPI_TalonSRX LowerDriveMotor = new WPI_TalonSRX(RobotMap.LOWER_DRIVE_MOTOR_1);
   private Ultrasonic carriageSonic = new Ultrasonic(RobotMap.CARRIAGE_ULTRASONIC_PORT_1, RobotMap.CARRIAGE_ULTRASONIC_PORT_2);
-
+  private boolean testt = false;
   public ClimbingSubsystem(){
     LowerDriveMotor.setNeutralMode(NeutralMode.Brake);
     LowerDriveMotor.set(ControlMode.PercentOutput, 0.0);
@@ -45,10 +45,19 @@ public class ClimbingSubsystem extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new MODriveLiftForward());
+    //setDefaultCommand(new MODriveLiftForward());
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
+
+  public void test(){
+    testt = !testt;
+    
+  }
+
+  public boolean showtest() {
+  return testt; 
+}
 
   public boolean rearDownOrNah() {
     if(RearLegs.get() == Value.kForward){
@@ -71,19 +80,19 @@ public class ClimbingSubsystem extends Subsystem {
   }
 
   public void raiseFront(){ //For raising front legs of robot, should make "FrontLegs" be in forward position
-    FrontLegs.set(DoubleSolenoid.Value.kForward);
-  }
-
-  public void lowerFront(){ //For lowering front legs of robot, should make "FrontLegs" be in reverse position
     FrontLegs.set(DoubleSolenoid.Value.kReverse);
   }
 
+  public void lowerFront(){ //For lowering front legs of robot, should make "FrontLegs" be in reverse position
+    FrontLegs.set(DoubleSolenoid.Value.kForward);
+  }
+
   public void raiseRear(){ //For raising rear legs of robot, should make "RearLegs" be in forward position
-  RearLegs.set(DoubleSolenoid.Value.kForward);
+  RearLegs.set(Value.kReverse);
   }
 
   public void lowerRear(){ //For lowering Rear legs of robot, should make "RearLegs" be in reverse position
-  RearLegs.set(DoubleSolenoid.Value.kReverse);
+  RearLegs.set(DoubleSolenoid.Value.kForward);
   }
 
   public void toggleLimit(){
@@ -106,6 +115,9 @@ public class ClimbingSubsystem extends Subsystem {
   public void updateDashboard(){
     SmartDashboard.putBoolean("6in. Limit Engaged?", SpikeLimit.get());
     SmartDashboard.putBoolean("Are Tanks Pressurized?", pressureSwitch());
+    SmartDashboard.putBoolean("Is Rear down?", isRearDown());
+    SmartDashboard.putBoolean("Is Front down?", isFrontDown());
+    SmartDashboard.putBoolean("test", showtest());
   }
 
   public void drive(double speed){
@@ -117,7 +129,7 @@ public class ClimbingSubsystem extends Subsystem {
   }
   
   public boolean isFrontDown(){
-    if(FrontLegs.get() == Value.kForward){
+    if(FrontLegs.get() == DoubleSolenoid.Value.kForward){
       return true;
     } else {
       return false;
@@ -133,7 +145,7 @@ public class ClimbingSubsystem extends Subsystem {
   }
 
   public boolean isRearDown(){
-    if(FrontLegs.get() == Value.kForward){
+    if(RearLegs.get() == Value.kForward){
       return true;
     } else {
       return false;

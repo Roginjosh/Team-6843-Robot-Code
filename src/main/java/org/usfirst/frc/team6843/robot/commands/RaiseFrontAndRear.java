@@ -9,15 +9,14 @@ package org.usfirst.frc.team6843.robot.commands;
 
 import org.usfirst.frc.team6843.robot.Robot;
 import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ToggleFrontLegs extends Command {
-    protected ClimbingSubsystem climbingSubsystem;
+public class RaiseFrontAndRear extends Command {
+  protected ClimbingSubsystem climbingSubsystem;
 
-  public ToggleFrontLegs() {
+  public RaiseFrontAndRear() {
     this.climbingSubsystem = Robot.getInstance().getClimbingSubsystem();
-    requires(climbingSubsystem);
+
   }
 
   // Called just before this Command runs the first time
@@ -28,7 +27,8 @@ public class ToggleFrontLegs extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    this.climbingSubsystem.ToggleFrontLegs();
+    this.climbingSubsystem.raiseFront();
+    this.climbingSubsystem.raiseRear();
   }
 
   // Make this return true when this Command no longer needs to run execute()
