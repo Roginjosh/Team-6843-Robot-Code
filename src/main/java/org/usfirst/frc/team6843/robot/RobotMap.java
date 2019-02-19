@@ -15,10 +15,11 @@ package org.usfirst.frc.team6843.robot;
  */
 public class RobotMap {
 	//CAN Bus
-	public static final int LEFT_MOTOR_1 = 12;
-	public static final int RIGHT_MOTOR_1 = 10;
-	public static final int HATCH_SLIDE_MOTOR = 14;
-	public static final int LOWER_DRIVE_MOTOR_1 = 15;
+	public static final int PNEUMATICS_CONTROL_MOTOR = 0;
+	public static final int LEFT_MOTOR_1 = 10;
+	public static final int RIGHT_MOTOR_1 = 11;
+	public static final int HATCH_SLIDE_MOTOR = 12;
+	public static final int LOWER_DRIVE_MOTOR_1 = 13;
 	public static final int COMPRESSOR = 0;
 	//DIO Ports
 	public static final int LIGHT_SENSOR_1 = 0;
