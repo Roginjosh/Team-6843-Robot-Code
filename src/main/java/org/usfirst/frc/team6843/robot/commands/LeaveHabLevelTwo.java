@@ -16,11 +16,11 @@ public class LeaveHabLevelTwo extends CommandGroup {
   public LeaveHabLevelTwo() {
     addSequential(new InitiateAlphaProtocol());
     addSequential(new DriveTo(-8));
-    addSequential(new LowerRear());
+    addSequential(new RaiseRobotRear());
     addSequential(new DriveCarriageUntil(12, false));
-    addSequential(new LowerFront());
+    addSequential(new RaiseRobotFront());
     addSequential(new DriveCarriageUntil(30, false));
-    addSequential(new RaiseFrontAndRear());
+    addSequential(new LowerRobotFrontandRear());
     
   }
 }

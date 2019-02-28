@@ -15,8 +15,8 @@ public class InitiateAlphaProtocol extends CommandGroup {
    */
   public InitiateAlphaProtocol() {
     addParallel(new LimitDisengage());
-    addParallel(new RaiseFront());
-    addParallel(new RaiseRear());
+    addParallel(new LowerRobotFront());
+    addParallel(new LowerRobotRear());
     addParallel(new PullHatchMechanism());
     addSequential(new CloseJaws());
 

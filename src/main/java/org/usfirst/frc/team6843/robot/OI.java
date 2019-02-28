@@ -14,7 +14,7 @@ import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
 import org.usfirst.frc.team6843.robot.commands.RaiseRobotFront;
-import org.usfirst.frc.team6843.robot.commands.LowerFrontAndRear;
+import org.usfirst.frc.team6843.robot.commands.RaiseRobotFrontAndRear;
 import org.usfirst.frc.team6843.robot.commands.RaiseRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ModulatedRobotUp;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
@@ -90,7 +90,7 @@ public class OI {
 		secondaryB.whenPressed(new LowerRobotRear());//(new OpenJaws());
 		secondaryA.whenPressed(new RaiseRobotRear());//whenPressed(new DriveCarriageFor(5, .25));
 		secondaryX.whenPressed(new RaiseRobotFront());
-		secondaryBumperLeft.whenPressed(new LowerFrontAndRear());
+		secondaryBumperLeft.whenPressed(new RaiseRobotFrontAndRear());
 		secondaryBumperRight.whenPressed(new ModulatedRobotUp());
 		// The below two are temporary
 		secondaryBack.whenPressed(new DriveCarriageFor(2, .5));//HabLevelThreeAuto());

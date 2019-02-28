@@ -16,11 +16,11 @@ public class HabLevelThreeAuto extends CommandGroup {
   public HabLevelThreeAuto() {
     addSequential(new InitiateAlphaProtocol());
     addSequential(new OpenJaws());
-    addSequential(new LowerFrontAndRear());
-    addSequential(new DriveCarriageUntil(18, true));
-    addSequential(new RaiseFront());
-    addSequential(new DriveCarriageUntil(2, true));
-    addSequential(new RaiseRear());
+    addSequential(new RaiseRobotFrontAndRear());
+    addSequential(new DriveCarriageFor(1, .25));//DriveCarriageUntil(18, true));
+    addSequential(new LowerRobotFront());
+    addSequential(new DriveCarriageFor(5, .25)); //Until(2, true));
+    addSequential(new LowerRobotRear());
     addSequential(new DriveTo(20));
   }
 }
