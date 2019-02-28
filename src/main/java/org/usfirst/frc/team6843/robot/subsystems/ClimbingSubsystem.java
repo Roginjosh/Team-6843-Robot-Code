@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -34,6 +35,7 @@ public class ClimbingSubsystem extends Subsystem {
   private Compressor Compressor = new Compressor(RobotMap.COMPRESSOR);
   private DoubleSolenoid FrontLegs = new DoubleSolenoid(RobotMap.FRONT_LEGS_PORT_1, RobotMap.FRONT_LEGS_PORT_2);
   private DoubleSolenoid RearLegs = new DoubleSolenoid(RobotMap.REAR_LEGS_PORT_1, RobotMap.REAR_LEGS_PORT_2);
+  private Solenoid MasterSolenoid = new Solenoid(RobotMap.MASTER_SOLENOID);
   private DigitalOutput SpikeLimit = new DigitalOutput(RobotMap.LIMIT_ENGAGER);
   private final WPI_TalonSRX LowerDriveMotor = new WPI_TalonSRX(RobotMap.LOWER_DRIVE_MOTOR_1);
   private Ultrasonic carriageSonic = new Ultrasonic(RobotMap.CARRIAGE_ULTRASONIC_PORT_1, RobotMap.CARRIAGE_ULTRASONIC_PORT_2);
@@ -108,6 +110,10 @@ public class ClimbingSubsystem extends Subsystem {
     SpikeLimit.set(true);
   }
 
+  public void setMaster(boolean on) {
+    MasterSolenoid.set(!on);
+  }
+
   public void limitDisengage(){
     SpikeLimit.set(false);
   }
@@ -118,6 +124,7 @@ public class ClimbingSubsystem extends Subsystem {
     SmartDashboard.putBoolean("Is Rear down?", isRearDown());
     SmartDashboard.putBoolean("Is Front down?", isFrontDown());
     SmartDashboard.putBoolean("test", showtest());
+    SmartDashboard.putBoolean("Master Solenoid", MasterSolenoid.get());
   }
 
   public void drive(double speed){

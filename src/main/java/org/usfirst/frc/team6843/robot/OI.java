@@ -22,6 +22,7 @@ import org.usfirst.frc.team6843.robot.commands.KillAll;
 import org.usfirst.frc.team6843.robot.commands.LowerFront;
 import org.usfirst.frc.team6843.robot.commands.LowerFrontAndRear;
 import org.usfirst.frc.team6843.robot.commands.LowerRear;
+import org.usfirst.frc.team6843.robot.commands.ModulatedRobotUp;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
 
@@ -96,7 +97,7 @@ public class OI {
 		secondaryA.whenPressed(new LowerRear());//whenPressed(new DriveCarriageFor(5, .25));
 		secondaryX.whenPressed(new LowerFront());
 		secondaryBumperLeft.whenPressed(new LowerFrontAndRear());
-		secondaryBumperRight.whenPressed(new RaiseFrontAndRear());
+		secondaryBumperRight.whenPressed(new ModulatedRobotUp());
 		// The below two are temporary
 		secondaryBack.whenPressed(new DriveCarriageFor(2, .5));//HabLevelThreeAuto());
 		secondaryStart.whenPressed( new DriveCarriageFor(2, -.5));//InitiateAlphaProtocol());

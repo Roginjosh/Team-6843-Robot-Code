@@ -42,6 +42,7 @@ public class RobotMap {
 	public static final int HATCH_MECHANISM_TOGGLE_PORT_1 = 4;
 	public static final int HATCH_MECHANISM_TOGGLE_PORT_2 = 5;
 	public static final int JAWS_SOLENOID = 6;
+	public static final int MASTER_SOLENOID = 7;
 	
 
 	}

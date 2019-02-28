@@ -151,6 +151,10 @@ public class DriveSubsystem extends Subsystem {
 		return gyroTurnRate;
 	}
 
+	public double getPitch(){
+		return gyro.getPitch();
+	}
+
 	/**
 	 * WARNING: The gyro must only ever be read by this method to ensure that the
 	 * starting heading is handled correctly.
@@ -267,6 +271,7 @@ public class DriveSubsystem extends Subsystem {
 	 */
 	public void updateDashboard() {
 		SmartDashboard.putNumber("Gyro", this.getGyroAngle());
+		SmartDashboard.putNumber("Pitch", -this.getPitch());
 		SmartDashboard.putNumber("Drive Left Encoder", leftMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Drive Right Encoder", rightMotor1.getSelectedSensorPosition(0));
 	}
