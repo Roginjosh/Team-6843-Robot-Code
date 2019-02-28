@@ -12,9 +12,9 @@ import org.usfirst.frc.team6843.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LowerRear extends Command {
+public class RaiseRobotRear extends Command {
   protected ClimbingSubsystem ClimbingSubsystem;
-  public LowerRear() {
+  public RaiseRobotRear() {
     this.ClimbingSubsystem = Robot.getInstance().getClimbingSubsystem();
     requires(this.ClimbingSubsystem);
   }

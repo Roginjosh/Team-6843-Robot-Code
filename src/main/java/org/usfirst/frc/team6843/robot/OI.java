@@ -8,20 +8,14 @@
 package org.usfirst.frc.team6843.robot;
 
 import org.usfirst.frc.team6843.robot.commands.RotateTo;
-import org.usfirst.frc.team6843.robot.commands.ToggleHatchMechanism;
-import org.usfirst.frc.team6843.robot.commands.OpenJaws;
-import org.usfirst.frc.team6843.robot.commands.RaiseFront;
-import org.usfirst.frc.team6843.robot.commands.RaiseFrontAndRear;
-import org.usfirst.frc.team6843.robot.commands.RaiseRear;
+import org.usfirst.frc.team6843.robot.commands.LowerRobotFront;
+import org.usfirst.frc.team6843.robot.commands.LowerRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
-import org.usfirst.frc.team6843.robot.commands.CloseJaws;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
-import org.usfirst.frc.team6843.robot.commands.HabLevelThreeAuto;
-import org.usfirst.frc.team6843.robot.commands.InitiateAlphaProtocol;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
-import org.usfirst.frc.team6843.robot.commands.LowerFront;
+import org.usfirst.frc.team6843.robot.commands.RaiseRobotFront;
 import org.usfirst.frc.team6843.robot.commands.LowerFrontAndRear;
-import org.usfirst.frc.team6843.robot.commands.LowerRear;
+import org.usfirst.frc.team6843.robot.commands.RaiseRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ModulatedRobotUp;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
@@ -92,10 +86,10 @@ public class OI {
 
 		//below this line is for secondary controller
 
-		secondaryY.whenPressed(new RaiseFront());//new ToggleHatchMechanism());
-		secondaryB.whenPressed(new RaiseRear());//(new OpenJaws());
-		secondaryA.whenPressed(new LowerRear());//whenPressed(new DriveCarriageFor(5, .25));
-		secondaryX.whenPressed(new LowerFront());
+		secondaryY.whenPressed(new LowerRobotFront());//new ToggleHatchMechanism());
+		secondaryB.whenPressed(new LowerRobotRear());//(new OpenJaws());
+		secondaryA.whenPressed(new RaiseRobotRear());//whenPressed(new DriveCarriageFor(5, .25));
+		secondaryX.whenPressed(new RaiseRobotFront());
 		secondaryBumperLeft.whenPressed(new LowerFrontAndRear());
 		secondaryBumperRight.whenPressed(new ModulatedRobotUp());
 		// The below two are temporary

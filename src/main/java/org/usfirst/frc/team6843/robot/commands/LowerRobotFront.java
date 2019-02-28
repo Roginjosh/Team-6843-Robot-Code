@@ -12,9 +12,9 @@ import org.usfirst.frc.team6843.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LowerFront extends Command {
+public class LowerRobotFront extends Command {
   protected ClimbingSubsystem ClimbingSubsystem;
-  public LowerFront() {
+  public LowerRobotFront() {
     this.ClimbingSubsystem = Robot.getInstance().getClimbingSubsystem();
     requires(this.ClimbingSubsystem);
   }
@@ -27,7 +27,7 @@ public class LowerFront extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    this.ClimbingSubsystem.lowerFront();
+    this.ClimbingSubsystem.raiseFront();
   }
 
   // Make this return true when this Command no longer needs to run execute()
