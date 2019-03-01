@@ -8,6 +8,7 @@
 package org.usfirst.frc.team6843.robot;
 
 import org.usfirst.frc.team6843.robot.commands.RotateTo;
+import org.usfirst.frc.team6843.robot.triggers.TwoButtonTrigger;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotFront;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
@@ -64,6 +65,12 @@ public class OI {
 	private final Button secondaryBumperRight = new JoystickButton(secondary, 6);
 	private final Button secondaryBack = new JoystickButton(secondary, 7);
 	private final Button secondaryStart = new JoystickButton(secondary, 8);
+	private final Trigger secondaryLeftThrottleButton = new ThrottleButton(secondary, LEFT_FRONT_THROTTLE);
+	private final Trigger secondaryRightThrottleButton = new ThrottleButton(secondary, RIGHT_FRONT_THROTTLE);
+	private final Button secondaryPOV90 = new POVButton(secondary, 90);
+
+	/** Two button trigger with POV90 buttons on both controllers */
+	private final Trigger twoButtonTrigger = new TwoButtonTrigger(secondaryPOV90, driverPOV90); 
 
 	public OI() { // this is where you assign commands to buttons
 		driverY.whenPressed(new RotateTo(0.0));
@@ -82,8 +89,8 @@ public class OI {
 		//driverStart.whileHeld(new DriveTillCancelled(true));
 		driverStart.whileHeld(new ApproachTarget());
 		driverStart.whenReleased(new ResetRotatedToTarget());
-		driverPOV90.whenPressed(new ResetGyro()); // TODO change to two button trigger
-
+		//driverPOV90.whenPressed(new ResetGyro()); // Has been changed to a two button trigger
+		
 		//below this line is for secondary controller
 
 		secondaryY.whenPressed(new LowerRobotFront());//new ToggleHatchMechanism());
@@ -95,6 +102,8 @@ public class OI {
 		// The below two are temporary
 		secondaryBack.whenPressed(new DriveCarriageFor(2, .5));//HabLevelThreeAuto());
 		secondaryStart.whenPressed( new DriveCarriageFor(2, -.5));//InitiateAlphaProtocol());
+
+		twoButtonTrigger.whenActive(new ResetGyro()); // FIXME Here's my attempt at the two button trigger, verify please?
 
 	}
 
