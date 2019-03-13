@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import org.usfirst.frc.team6843.robot.RobotMap;
 import org.usfirst.frc.team6843.robot.commands.MoveHatchMechanism;
@@ -21,7 +22,9 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
@@ -40,12 +43,11 @@ public class HatchPanelSubsystem extends Subsystem {
   private DigitalInput LS6 = new DigitalInput(RobotMap.LIGHT_SENSOR_6);
   private DigitalInput LS7 = new DigitalInput(RobotMap.LIGHT_SENSOR_7); 
   private AnalogTrigger linearEncoderOutput = new AnalogTrigger(0);
-  private Counter linearEncoder = new Counter(linearEncoderOutput);
-  private WPI_TalonSRX linearSlideMotor = new WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
+  private Encoder linearEncoder = new Encoder(RobotMap.HATCH_LINEAR_ENCODER_PORT_1, RobotMap.HATCH_LINEAR_ENCODER_PORT_2);
+  //private Counter linearEncoder = new Counter(EncodingType.k1X, new DigitalInput(RobotMap.HATCH_LINEAR_ENCODER_PORT_1), new DigitalInput(RobotMap.HATCH_LINEAR_ENCODER_PORT_2), false);
+  private WPI_VictorSPX linearSlideMotor = new WPI_VictorSPX(RobotMap.HATCH_SLIDE_MOTOR); // FIXME WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
   private DoubleSolenoid MechanismEngage = new DoubleSolenoid(4, 5); //RobotMap.HATCH_MECHANISM_TOGGLE_PORT_1, RobotMap.HATCH_MECHANISM_TOGGLE_PORT_2);
   ///private Encoder linearEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-  
-  
 
   public HatchPanelSubsystem(){
     linearEncoderOutput.setLimitsVoltage(2, 2.6);
@@ -147,14 +149,15 @@ public class HatchPanelSubsystem extends Subsystem {
      // linearSlideMotor.set(ControlMode.PercentOutput, .25);
     }
   }
-
+//John has a smol pp
   public double linearDistance(){
     return (linearEncoder.get() * (1/82.8));
   }
 
   public void clearLinearDistance(){
-    linearEncoder.clearUpSource();
-    linearEncoder.clearDownSource();
+    //linearEncoder.clearUpSource();
+    //linearEncoder.clearDownSource();
+    linearEncoder.reset();
   }
 
   public boolean mechanismForward(){
