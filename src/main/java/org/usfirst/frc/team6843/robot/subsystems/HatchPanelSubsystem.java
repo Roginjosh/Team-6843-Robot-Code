@@ -10,8 +10,7 @@ package org.usfirst.frc.team6843.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX; //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX; 
 
 import org.usfirst.frc.team6843.robot.RobotMap;
 import org.usfirst.frc.team6843.robot.commands.MoveHatchMechanism;
@@ -19,12 +18,10 @@ import org.usfirst.frc.team6843.robot.commands.MoveHatchMechanism;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
