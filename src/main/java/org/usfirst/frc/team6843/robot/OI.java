@@ -103,7 +103,7 @@ public class OI {
 		secondaryBack.whenPressed(new DriveCarriageFor(2, .5));//HabLevelThreeAuto());
 		secondaryStart.whenPressed( new DriveCarriageFor(2, -.5));//InitiateAlphaProtocol());
 
-		twoButtonTrigger.whenActive(new ResetGyro()); // FIXME Here's my attempt at the two button trigger, verify please?
+		twoButtonTrigger.whenActive(new ResetGyro());
 
 	}
 
