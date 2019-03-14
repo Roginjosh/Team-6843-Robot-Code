@@ -122,6 +122,11 @@ public class HatchPanelSubsystem extends Subsystem {
     SmartDashboard.putNumber("Distance from Home of Tape", distanceToGoal());
     SmartDashboard.putNumber("Distance", linearDistance());
     SmartDashboard.putBoolean("The Mechanism is Forward", mechanismForward());
+    SmartDashboard.putNumber("Linerar Encoder", linearEncoderValue());
+  }
+
+  public double linearEncoderValue(){
+    return linearEncoder.get();
   }
 
   public void jawsOff(){

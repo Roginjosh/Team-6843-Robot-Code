@@ -8,16 +8,19 @@
 package org.usfirst.frc.team6843.robot;
 
 import org.usfirst.frc.team6843.robot.commands.RotateTo;
+import org.usfirst.frc.team6843.robot.commands.ToggleHatchMechanism;
 import org.usfirst.frc.team6843.robot.triggers.TwoButtonTrigger;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotFront;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
+import org.usfirst.frc.team6843.robot.commands.CloseJaws;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
 import org.usfirst.frc.team6843.robot.commands.RaiseRobotFront;
 import org.usfirst.frc.team6843.robot.commands.RaiseRobotFrontAndRear;
 import org.usfirst.frc.team6843.robot.commands.RaiseRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ModulatedRobotUp;
+import org.usfirst.frc.team6843.robot.commands.OpenJaws;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
 
@@ -93,9 +96,9 @@ public class OI {
 		
 		//below this line is for secondary controller
 
-		secondaryY.whenPressed(new LowerRobotFront());//new ToggleHatchMechanism());
-		secondaryB.whenPressed(new LowerRobotRear());//(new OpenJaws());
-		secondaryA.whenPressed(new RaiseRobotRear());//whenPressed(new DriveCarriageFor(5, .25));
+		secondaryY.whenPressed(new ToggleHatchMechanism());
+		secondaryB.whenPressed(new OpenJaws());
+		secondaryA.whenPressed(new CloseJaws());//(new RaiseRobotRear());//whenPressed(new DriveCarriageFor(5, .25));
 		secondaryX.whenPressed(new RaiseRobotFront());
 		secondaryBumperLeft.whenPressed(new RaiseRobotFrontAndRear());
 		secondaryBumperRight.whenPressed(new ModulatedRobotUp());
