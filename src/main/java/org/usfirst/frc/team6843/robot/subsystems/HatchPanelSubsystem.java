@@ -45,10 +45,12 @@ public class HatchPanelSubsystem extends Subsystem {
   private WPI_VictorSPX linearSlideMotor = new WPI_VictorSPX(RobotMap.HATCH_SLIDE_MOTOR); // FIXME WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
   private DoubleSolenoid MechanismEngage = new DoubleSolenoid(4, 5); //RobotMap.HATCH_MECHANISM_TOGGLE_PORT_1, RobotMap.HATCH_MECHANISM_TOGGLE_PORT_2);
   ///private Encoder linearEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+  
 
   public HatchPanelSubsystem(){
     linearEncoderOutput.setLimitsVoltage(2, 2.6);
     compressor.setClosedLoopControl(true);
+    linearEncoder.reset();
     /*
     linearEncoder.setMaxPeriod(.1);
     linearEncoder.setMinRate(10);
@@ -62,8 +64,8 @@ public class HatchPanelSubsystem extends Subsystem {
     setDefaultCommand(new MoveHatchMechanism());
   }
 
-  public double distanceToGoal() {
-    double temp = 0, distance = 0, amttemp = 0, interval = 1;
+  public double distanceFromZero() {
+    double temp = 0, distance = 0, amttemp = 0, interval = 1.25;
     if(!LS1.get()){
       temp += -3;
       amttemp++;
@@ -100,29 +102,46 @@ public class HatchPanelSubsystem extends Subsystem {
   }
   
   public void goToGoal(){
-    if(!atGoal() && (distanceToGoal() < 0)){
-      linearSlideMotor.set(ControlMode.PercentOutput, .75);
+    if(!atGoal() && (distanceFromZero() < 0)){
+      linearSlideMotor.set(ControlMode.PercentOutput, .35);
 
-    } else if(!atGoal() && (distanceToGoal() > 0)){
-      linearSlideMotor.set(ControlMode.PercentOutput, -.75);
+    } else if(!atGoal() && (distanceFromZero() > 0)){
+      linearSlideMotor.set(ControlMode.PercentOutput, -.35);
     } else {
       linearSlideMotor.set(ControlMode.PercentOutput, 0.0);
     }               
   }    
 
+  public double distanceToGoal(){
+    return distanceFromZero() - linearDistance();
+  }
+
   public boolean atGoal(){
-    if((linearDistance() > (distanceToGoal() - .25 )) && (linearDistance() < (distanceToGoal() + .25 ))){
-      return true;
-    } else {
+    if(Math.abs(distanceToGoal()) > .5){
+    //if((linearDistance() > (distanceFromZero() - .25 )) || (linearDistance() < (distanceFromZero() + .25 ))){
       return false;
+    } else {
+      return true;
     }
   }
 
   public void updateDashboard(){
-    SmartDashboard.putNumber("Distance from Home of Tape", distanceToGoal());
+    SmartDashboard.putNumber("Distance from Zero", distanceFromZero());
     SmartDashboard.putNumber("Distance", linearDistance());
     SmartDashboard.putBoolean("The Mechanism is Forward", mechanismForward());
-    SmartDashboard.putNumber("Linerar Encoder", linearEncoderValue());
+    SmartDashboard.putNumber("Linerar Position", linearDistance());
+    SmartDashboard.putBoolean("At Goal?", atGoal());
+    SmartDashboard.putNumber("Distance to Goal", distanceToGoal());
+    SmartDashboard.putBoolean("Light Sensor 1", LS1.get());
+    SmartDashboard.putBoolean("Light Sensor 2", LS2.get());
+    SmartDashboard.putBoolean("Light Sensor 3", LS3.get());
+    SmartDashboard.putBoolean("Light Sensor 4", LS4.get());
+    SmartDashboard.putBoolean("Light Sensor 5", LS5.get());
+    SmartDashboard.putBoolean("Light Sensor 6", LS6.get());
+    SmartDashboard.putBoolean("Light Sensor 7", LS7.get());
+
+
+
   }
 
   public double linearEncoderValue(){
@@ -153,7 +172,7 @@ public class HatchPanelSubsystem extends Subsystem {
   }
 //John has a smol pp
   public double linearDistance(){
-    return (linearEncoder.get() * (1/82.8));
+    return (linearEncoder.get() * (1/90));
   }
 
   public void clearLinearDistance(){
