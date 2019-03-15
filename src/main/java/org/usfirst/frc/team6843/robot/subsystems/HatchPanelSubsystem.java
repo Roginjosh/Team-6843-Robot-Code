@@ -103,17 +103,17 @@ public class HatchPanelSubsystem extends Subsystem {
   }
   
   public void goToGoal(){
-    if(!isThereALine()){
+    if(!isThereALine()){  //There is no line to track to
       if(Math.abs(linearPosition()) < .5){
         linearSlideMotor.set(ControlMode.PercentOutput, 0);
-      } else if(linearPosition() > 0)
+      } else if(linearPosition() > 0) {
         linearSlideMotor.set(ControlMode.PercentOutput, -.35);
       } else if (linearPosition() < 0) {
+        linearSlideMotor.set(ControlMode.PercentOutput, .35); }
+    } else {     //There is a line
+      if((linearPosition() > locationOfLine()) && !onLine()){
         linearSlideMotor.set(ControlMode.PercentOutput, .35);
-    } else {
-      if(linearPosition() > locationOfLine() && !onLine()){
-        linearSlideMotor.set(ControlMode.PercentOutput, .35);
-      } else if (linearPosition() < locationOfLine() && !onLine()){
+      } else if ((linearPosition() < locationOfLine()) && !onLine()){
         linearSlideMotor.set(ControlMode.PercentOutput, -.35);
       } else {
         linearSlideMotor.set(ControlMode.PercentOutput, 0);
