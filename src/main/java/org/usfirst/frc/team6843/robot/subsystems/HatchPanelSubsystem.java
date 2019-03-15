@@ -39,7 +39,7 @@ public class HatchPanelSubsystem extends Subsystem {
   private DigitalInput LS5 = new DigitalInput(RobotMap.LIGHT_SENSOR_5);
   private DigitalInput LS6 = new DigitalInput(RobotMap.LIGHT_SENSOR_6);
   private DigitalInput LS7 = new DigitalInput(RobotMap.LIGHT_SENSOR_7); 
-  private AnalogTrigger linearEncoderOutput = new AnalogTrigger(0);
+  //private AnalogTrigger linearEncoderOutput = new AnalogTrigger(0);
   private Encoder linearEncoder = new Encoder(RobotMap.HATCH_LINEAR_ENCODER_PORT_1, RobotMap.HATCH_LINEAR_ENCODER_PORT_2);
   //private Counter linearEncoder = new Counter(EncodingType.k1X, new DigitalInput(RobotMap.HATCH_LINEAR_ENCODER_PORT_1), new DigitalInput(RobotMap.HATCH_LINEAR_ENCODER_PORT_2), false);
   private WPI_VictorSPX linearSlideMotor = new WPI_VictorSPX(RobotMap.HATCH_SLIDE_MOTOR); // FIXME WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
@@ -48,7 +48,7 @@ public class HatchPanelSubsystem extends Subsystem {
   
 
   public HatchPanelSubsystem(){
-    linearEncoderOutput.setLimitsVoltage(2, 2.6);
+   // linearEncoderOutput.setLimitsVoltage(2, 2.6);
     compressor.setClosedLoopControl(true);
     linearEncoder.reset();
     /*
@@ -127,7 +127,6 @@ public class HatchPanelSubsystem extends Subsystem {
 
   public void updateDashboard(){
     SmartDashboard.putNumber("Distance from Zero", distanceFromZero());
-    SmartDashboard.putNumber("Distance", linearDistance());
     SmartDashboard.putBoolean("The Mechanism is Forward", mechanismForward());
     SmartDashboard.putNumber("Linerar Position", linearDistance());
     SmartDashboard.putBoolean("At Goal?", atGoal());
@@ -139,7 +138,7 @@ public class HatchPanelSubsystem extends Subsystem {
     SmartDashboard.putBoolean("Light Sensor 5", LS5.get());
     SmartDashboard.putBoolean("Light Sensor 6", LS6.get());
     SmartDashboard.putBoolean("Light Sensor 7", LS7.get());
-
+    SmartDashboard.putNumber("Raw Linear Encoder", linearEncoderValue());
 
 
   }
