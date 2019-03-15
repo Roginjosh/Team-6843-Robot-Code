@@ -64,8 +64,8 @@ public class HatchPanelSubsystem extends Subsystem {
     setDefaultCommand(new MoveHatchMechanism());
   }
 
-  public double distanceFromZero() {
-    double temp = 0, distance = 0, amttemp = 0, interval = 1.25;
+  public double locationOfLine() {
+    double temp = 0, location = 0, amttemp = 0, interval = 1.25;
     if(!LS1.get()){
       temp += -3;
       amttemp++;
@@ -96,40 +96,66 @@ public class HatchPanelSubsystem extends Subsystem {
     }
     if (amttemp == 0) {
       return 0;
+    } else {
+    location = interval * (temp / amttemp);
+    return location;
     }
-    distance = interval * (temp / amttemp);
-    return distance;
   }
   
   public void goToGoal(){
-    if(!atGoal() && (distanceFromZero() < 0)){
+    if(!isThereALine()){
+      if(Math.abs(linearPosition()) < .5){
+        linearSlideMotor.set(ControlMode.PercentOutput, 0);
+      } else if(linearPosition() > 0)
+        linearSlideMotor.set(ControlMode.PercentOutput, -.35);
+      } else if (linearPosition() < 0) {
+        linearSlideMotor.set(ControlMode.PercentOutput, .35);
+    } else {
+      if(linearPosition() < locationOfLine() && !onLine()){
+        linearSlideMotor.set(ControlMode.PercentOutput, .35);
+      } else if (linearPosition() > locationOfLine() && !onLine()){
+        linearSlideMotor.set(ControlMode.PercentOutput, -.35);
+      } else {
+        linearSlideMotor.set(ControlMode.PercentOutput, 0);
+      }
+    }
+   
+    /*if(!atGoal() && (locationOfLine() < 0)){
       linearSlideMotor.set(ControlMode.PercentOutput, .35);
 
-    } else if(!atGoal() && (distanceFromZero() > 0)){
+    } else if(!atGoal() && (locationOfLine() > 0)){
       linearSlideMotor.set(ControlMode.PercentOutput, -.35);
     } else {
       linearSlideMotor.set(ControlMode.PercentOutput, 0.0);
-    }               
+    }      */         
   }    
 
   public double distanceToGoal(){
-    return distanceFromZero() - linearDistance();
+    return locationOfLine() - linearPosition();
   }
 
-  public boolean atGoal(){
-    if(Math.abs(distanceToGoal()) > .5){
-    //if((linearDistance() > (distanceFromZero() - .25 )) || (linearDistance() < (distanceFromZero() + .25 ))){
-      return false;
+  public boolean isThereALine() {
+    if(LS1.get() && LS2.get() && LS3.get() && LS4.get() && LS5.get() && LS6.get() && LS7.get()){
+    return false;
     } else {
       return true;
     }
   }
 
+  public boolean onLine(){
+    if (Math.abs(locationOfLine() - linearPosition()) < .75){
+      return true;
+    } else {
+      return false;
+    }
+    
+  }
+
   public void updateDashboard(){
-    SmartDashboard.putNumber("Distance from Zero", distanceFromZero());
+    SmartDashboard.putNumber("Location of Line", locationOfLine());
     SmartDashboard.putBoolean("The Mechanism is Forward", mechanismForward());
-    SmartDashboard.putNumber("Linerar Position", linearDistance());
-    SmartDashboard.putBoolean("At Goal?", atGoal());
+    SmartDashboard.putNumber("Linerar Position", linearPosition());
+    SmartDashboard.putBoolean("Are we at the line?", onLine());
     SmartDashboard.putNumber("Distance to Goal", distanceToGoal());
     SmartDashboard.putBoolean("Light Sensor 1", LS1.get());
     SmartDashboard.putBoolean("Light Sensor 2", LS2.get());
@@ -170,8 +196,8 @@ public class HatchPanelSubsystem extends Subsystem {
     }
   }
 //John has a smol pp
-  public double linearDistance(){
-    return (linearEncoder.get() * (1.0/90.0));
+  public double linearPosition(){
+    return (linearEncoder.get() * (1.0/82.8));
   }
 
   public void clearLinearDistance(){
