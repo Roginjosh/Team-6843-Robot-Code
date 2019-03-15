@@ -22,6 +22,7 @@ import org.usfirst.frc.team6843.robot.commands.RaiseRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ModulatedRobotUp;
 import org.usfirst.frc.team6843.robot.commands.OpenJaws;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
+import org.usfirst.frc.team6843.robot.commands.ResetLinearEncoder;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -99,7 +100,7 @@ public class OI {
 		secondaryY.whenPressed(new ToggleHatchMechanism());
 		secondaryB.whenPressed(new OpenJaws());
 		secondaryA.whenPressed(new CloseJaws());//(new RaiseRobotRear());//whenPressed(new DriveCarriageFor(5, .25));
-		secondaryX.whenPressed(new RaiseRobotFront());
+		secondaryX.whenPressed(new ResetLinearEncoder());
 		secondaryBumperLeft.whenPressed(new RaiseRobotFrontAndRear());
 		secondaryBumperRight.whenPressed(new ModulatedRobotUp());
 		// The below two are temporary
