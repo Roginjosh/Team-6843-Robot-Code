@@ -171,7 +171,7 @@ public class HatchPanelSubsystem extends Subsystem {
   }
 //John has a smol pp
   public double linearDistance(){
-    return (linearEncoder.get() * (1/90));
+    return (linearEncoder.get() * (1.0/90.0));
   }
 
   public void clearLinearDistance(){
