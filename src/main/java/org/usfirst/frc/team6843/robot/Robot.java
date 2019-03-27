@@ -59,8 +59,8 @@ public class Robot extends TimedRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// SmartDashboard.putData("Auto mode", auto_chooser);
 		this.startOrientationChooser = new SendableChooser<>();
-		this.startOrientationChooser.setDefaultOption("Backward", StartOrientation.BACKWARD);
-		this.startOrientationChooser.addOption("Forward", StartOrientation.FORWARD);
+		this.startOrientationChooser.setDefaultOption("Forward", StartOrientation.FORWARD);
+		this.startOrientationChooser.addOption("Backward", StartOrientation.BACKWARD);
 		this.startOrientationChooser.addOption("Left", StartOrientation.LEFT);
 		this.startOrientationChooser.addOption("Right", StartOrientation.RIGHT);
 		SmartDashboard.putData("Start orientation", this.startOrientationChooser);
