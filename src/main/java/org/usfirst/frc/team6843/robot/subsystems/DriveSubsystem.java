@@ -270,10 +270,10 @@ public class DriveSubsystem extends Subsystem {
 	 * Updates the dashboard with drive subsystem critical data.
 	 */
 	public void updateDashboard() {
-		SmartDashboard.putNumber("Gyro", this.getGyroAngle());
+	/*	SmartDashboard.putNumber("Gyro", this.getGyroAngle());
 		SmartDashboard.putNumber("Pitch", -this.getPitch());
 		SmartDashboard.putNumber("Drive Left Encoder", leftMotor1.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Drive Right Encoder", rightMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Drive Right Encoder", rightMotor1.getSelectedSensorPosition(0));*/
 	}
 
 	/**

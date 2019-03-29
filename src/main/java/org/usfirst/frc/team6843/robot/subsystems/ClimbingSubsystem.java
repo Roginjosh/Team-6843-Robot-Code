@@ -35,12 +35,12 @@ public class ClimbingSubsystem extends Subsystem {
   private DoubleSolenoid RearLegs = new DoubleSolenoid(RobotMap.REAR_LEGS_PORT_1, RobotMap.REAR_LEGS_PORT_2);
   private Solenoid MasterSolenoid = new Solenoid(RobotMap.MASTER_SOLENOID);
   private DigitalOutput SpikeLimit = new DigitalOutput(RobotMap.LIMIT_ENGAGER);
-  private final WPI_TalonSRX LowerDriveMotor = new WPI_TalonSRX(RobotMap.LOWER_DRIVE_MOTOR_1);
+//  private final WPI_TalonSRX LowerDriveMotor = new WPI_TalonSRX(RobotMap.LOWER_DRIVE_MOTOR_1);
   private Ultrasonic carriageSonic = new Ultrasonic(RobotMap.CARRIAGE_ULTRASONIC_PORT_1, RobotMap.CARRIAGE_ULTRASONIC_PORT_2);
   private boolean testt = false;
   public ClimbingSubsystem(){
-    LowerDriveMotor.setNeutralMode(NeutralMode.Brake);
-    LowerDriveMotor.set(ControlMode.PercentOutput, 0.0);
+//    LowerDriveMotor.setNeutralMode(NeutralMode.Brake);
+//    LowerDriveMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
@@ -117,20 +117,20 @@ public class ClimbingSubsystem extends Subsystem {
   }
 
   public void updateDashboard(){
-    SmartDashboard.putBoolean("6in. Limit Engaged?", SpikeLimit.get());
+   /* SmartDashboard.putBoolean("6in. Limit Engaged?", SpikeLimit.get());
     SmartDashboard.putBoolean("Are Tanks Pressurized?", pressureSwitch());
     SmartDashboard.putBoolean("Is Rear down?", isRearDown());
     SmartDashboard.putBoolean("Is Front down?", isFrontDown());
     SmartDashboard.putBoolean("test", showtest());
-    SmartDashboard.putBoolean("Master Solenoid", MasterSolenoid.get());
+    SmartDashboard.putBoolean("Master Solenoid", MasterSolenoid.get()); */
   }
 
   public void drive(double speed){
-    LowerDriveMotor.set(ControlMode.PercentOutput, speed);
+//    LowerDriveMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void driveTo(double position){
-    LowerDriveMotor.set(ControlMode.Position, position);
+//    LowerDriveMotor.set(ControlMode.Position, position);
   }
   
   public boolean isFrontDown(){
@@ -167,11 +167,11 @@ public class ClimbingSubsystem extends Subsystem {
 
   public void driveUntil(double limit, boolean direction){
     if ((carriageSonic.getRangeInches() <= limit) && direction) {
-      LowerDriveMotor.set(ControlMode.PercentOutput, .25);
+//      LowerDriveMotor.set(ControlMode.PercentOutput, .25);
     } else if((carriageSonic.getRangeInches() >= limit) && !direction) {
-      LowerDriveMotor.set(ControlMode.PercentOutput, -.25);
+//      LowerDriveMotor.set(ControlMode.PercentOutput, -.25);
       } else {
-      LowerDriveMotor.set(ControlMode.PercentOutput, 0);
+//      LowerDriveMotor.set(ControlMode.PercentOutput, 0);
     }
   }
 

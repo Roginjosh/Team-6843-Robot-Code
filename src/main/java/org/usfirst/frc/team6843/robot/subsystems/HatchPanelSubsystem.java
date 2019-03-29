@@ -106,9 +106,9 @@ public class HatchPanelSubsystem extends Subsystem {
     if(!isThereALine()){  //There is no line to track to
       if(Math.abs(linearPosition()) < .5){
         linearSlideMotor.set(ControlMode.PercentOutput, 0);
-      } else if(linearPosition() > 0) {
+      } else if(linearPosition() < 0) {
         linearSlideMotor.set(ControlMode.PercentOutput, -.35);
-      } else if (linearPosition() < 0) {
+      } else if (linearPosition() > 0) {
         linearSlideMotor.set(ControlMode.PercentOutput, .35); }
     } else {     //There is a line
       if((linearPosition() > locationOfLine()) && !onLine()){
@@ -131,7 +131,7 @@ public class HatchPanelSubsystem extends Subsystem {
   }    
 
   public double distanceToGoal(){
-    return locationOfLine() - linearPosition();
+    return -(locationOfLine() - linearPosition());
   }
 
   public boolean isThereALine() {
@@ -157,13 +157,13 @@ public class HatchPanelSubsystem extends Subsystem {
     SmartDashboard.putNumber("Linerar Position", linearPosition());
     SmartDashboard.putBoolean("Are we at the line?", onLine());
     SmartDashboard.putNumber("Distance to Goal", distanceToGoal());
-    SmartDashboard.putBoolean("Light Sensor 1", LS1.get());
+    /*SmartDashboard.putBoolean("Light Sensor 1", LS1.get());
     SmartDashboard.putBoolean("Light Sensor 2", LS2.get());
     SmartDashboard.putBoolean("Light Sensor 3", LS3.get());
     SmartDashboard.putBoolean("Light Sensor 4", LS4.get());
     SmartDashboard.putBoolean("Light Sensor 5", LS5.get());
     SmartDashboard.putBoolean("Light Sensor 6", LS6.get());
-    SmartDashboard.putBoolean("Light Sensor 7", LS7.get());
+    SmartDashboard.putBoolean("Light Sensor 7", LS7.get());*/
     SmartDashboard.putNumber("Raw Linear Encoder", linearEncoderValue());
 
 
@@ -197,7 +197,7 @@ public class HatchPanelSubsystem extends Subsystem {
   }
 //John has a smol pp
   public double linearPosition(){
-    return (linearEncoder.get() * (1.0/82.8));
+    return (linearEncoder.get() * (-1.0/82.8));
   }
 
   public void clearLinearDistance(){
