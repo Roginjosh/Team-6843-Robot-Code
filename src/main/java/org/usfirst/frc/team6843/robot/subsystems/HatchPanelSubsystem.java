@@ -98,7 +98,7 @@ public class HatchPanelSubsystem extends Subsystem {
       return 0;
     } else {
     location = interval * (temp / amttemp);
-    return location;
+    return location-1;
     }
   }
   
@@ -111,9 +111,9 @@ public class HatchPanelSubsystem extends Subsystem {
       } else if (linearPosition() < 0) {
         linearSlideMotor.set(ControlMode.PercentOutput, .35); }
     } else {     //There is a line
-      if((linearPosition() > locationOfLine()) && !onLine()){
+      if((linearPosition() < locationOfLine()) && !onLine()){
         linearSlideMotor.set(ControlMode.PercentOutput, .35);
-      } else if ((linearPosition() < locationOfLine()) && !onLine()){
+      } else if ((linearPosition() > locationOfLine()) && !onLine()){
         linearSlideMotor.set(ControlMode.PercentOutput, -.35);
       } else {
         linearSlideMotor.set(ControlMode.PercentOutput, 0);
