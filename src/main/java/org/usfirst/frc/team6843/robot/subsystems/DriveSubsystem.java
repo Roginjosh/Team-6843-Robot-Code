@@ -332,7 +332,7 @@ public class DriveSubsystem extends Subsystem {
 			}
 		}
 
-		velocityDrive(leftMotorOutput * 1500.0, rightMotorOutput * -1500.0);
+		velocityDrive(leftMotorOutput * 2250.0, rightMotorOutput * -2250.0); // Was 1500 and -1500 
 	}
 
 	/**
