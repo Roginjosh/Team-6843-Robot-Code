@@ -8,6 +8,7 @@
 package org.usfirst.frc.team6843.robot;
 
 import org.usfirst.frc.team6843.robot.commands.DriveTo;
+import org.usfirst.frc.team6843.robot.commands.InitiateAlphaProtocol;
 import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team6843.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team6843.robot.subsystems.HatchPanelSubsystem;
@@ -38,7 +39,7 @@ public class Robot extends TimedRobot {
 	private double startHeading = 0.0;
 	private SendableChooser<Command> auto_chooser;
 	private Command autonomousCommand;
-	
+	//private Command InitiateAlphaProtocol;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
 		this.startOrientationChooser.addOption("Left", StartOrientation.LEFT);
 		this.startOrientationChooser.addOption("Right", StartOrientation.RIGHT);
 		SmartDashboard.putData("Start orientation", this.startOrientationChooser);
+	//	this.initiateAlphaProtocol = new InitiateAlphaProtocol();
 	}
 
 	public static Robot getInstance() {
@@ -219,6 +221,7 @@ public class Robot extends TimedRobot {
 			autonomousCommand.cancel();
 		}
 		updateStartingHeading();
+		Scheduler.getInstance().add(new InitiateAlphaProtocol());
 	}
 
 	/**

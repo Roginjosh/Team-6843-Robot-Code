@@ -8,6 +8,7 @@
 package org.usfirst.frc.team6843.robot;
 
 import org.usfirst.frc.team6843.robot.commands.RotateTo;
+import org.usfirst.frc.team6843.robot.commands.SmartResetHatchEncoder;
 import org.usfirst.frc.team6843.robot.commands.ToggleHatchMechanism;
 import org.usfirst.frc.team6843.robot.triggers.TwoButtonTrigger;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotFront;
@@ -105,10 +106,10 @@ public class OI {
 		secondaryBumperRight.whenPressed(new ModulatedRobotUp());
 		// The below two are temporary
 		secondaryBack.whenPressed(new DriveCarriageFor(2, .5));//HabLevelThreeAuto());
-		secondaryStart.whenPressed( new DriveCarriageFor(2, -.5));//InitiateAlphaProtocol());
+		secondaryStart.whenPressed( new SmartResetHatchEncoder());//DriveCarriageFor(2, -.5));//InitiateAlphaProtocol());
 
 		twoButtonTrigger.whenActive(new ResetGyro());
-
+		
 	}
 
 	/**
