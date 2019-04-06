@@ -21,7 +21,7 @@ public class TimedRaiseRobotRear extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-        setTimeout(3);
+        setTimeout(1);
 
   }
 

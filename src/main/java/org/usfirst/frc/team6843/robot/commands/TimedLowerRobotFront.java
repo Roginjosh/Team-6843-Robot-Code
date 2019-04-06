@@ -21,7 +21,7 @@ public class TimedLowerRobotFront extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-        setTimeout(4);
+        setTimeout(1);
 
   }
 
