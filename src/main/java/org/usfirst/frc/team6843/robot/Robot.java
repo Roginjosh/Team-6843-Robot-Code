@@ -162,12 +162,13 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		updateStartingHeading();
 
-		autonomousCommand = auto_chooser.getSelected();
+		/*autonomousCommand = auto_chooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
-		}
-		
+		}*/
+		Scheduler.getInstance().add(new InitiateAlphaProtocol());
+
 	}
 
 	/**

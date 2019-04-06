@@ -17,9 +17,9 @@ public class LeaveHabLevelTwo extends CommandGroup {
     addSequential(new InitiateAlphaProtocol());
     addSequential(new DriveTo(-8));
     addSequential(new RaiseRobotRear());
-    addSequential(new DriveToFrontLegs(.75));
+    addSequential(new DriveToFrontLegs(.75, 0.15));
     addSequential(new RaiseRobotFront());
-    addSequential(new DriveToRearLegs(.75));
+    addSequential(new DriveToRearLegs(.75, 0.15));
     addSequential(new LowerRobotFrontAndRear());
     
   }

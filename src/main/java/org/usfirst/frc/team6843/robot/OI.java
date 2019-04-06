@@ -14,6 +14,7 @@ import org.usfirst.frc.team6843.robot.commands.LowerRobotFrontAndRear;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
 import org.usfirst.frc.team6843.robot.commands.CloseJaws;
+import org.usfirst.frc.team6843.robot.commands.DriveCarriage;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
 import org.usfirst.frc.team6843.robot.commands.HabLevelThreeAuto;
 import org.usfirst.frc.team6843.robot.commands.HabLevelTwoAuto;
@@ -31,6 +32,8 @@ import org.usfirst.frc.team6843.robot.commands.PushHatchMechanism;
 import org.usfirst.frc.team6843.robot.commands.RaiseRobotFront;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
+import org.usfirst.frc.team6843.robot.commands.ModulatedUpGroup;
+
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -65,7 +68,11 @@ public class OI {
 	private final Button driverStart = new JoystickButton(driver, 8);
 	private final Trigger driverLeftThrottleButton = new ThrottleButton(driver, LEFT_FRONT_THROTTLE);
 	private final Trigger driverRightThrottleButton = new ThrottleButton(driver, RIGHT_FRONT_THROTTLE);
+	private final Button driverPOV0 = new POVButton(driver, 0);
 	private final Button driverPOV90 = new POVButton(driver, 90);
+	private final Button driverPOV180 = new POVButton(driver, 180);
+	private final Button driverPOV270 = new POVButton(driver, 270);
+
 
 	private final XboxController secondary = new XboxController(1);
 	private final Button secondaryY = new JoystickButton(secondary, 4);
@@ -83,13 +90,19 @@ public class OI {
 	private final Button secondaryPOV180 = new POVButton(secondary, 180);
 	private final Button secondaryPOV270 = new POVButton(secondary, 270);
 	/** Two button trigger with POV90 buttons on both controllers */
-	private final Trigger twoButtonTrigger = new TwoButtonTrigger(secondaryPOV90, driverPOV90); 
+	private final Trigger twoButtonTrigger = new TwoButtonTrigger(secondaryPOV90, driverPOV0); 
+	private final Button secondaryLJoyClick = new JoystickButton(secondary, 9);
+	private final Button secondaryRJoyClick = new JoystickButton(secondary, 10);
+	
 
 	public OI() { // this is where you assign commands to buttons
 		driverY.whenPressed(new RotateTo(0.0));
 		driverB.whenPressed(new RotateTo(90.0));
 		driverA.whenPressed(new RotateTo(180.0));
 		driverX.whenPressed(new RotateTo(-90.0));
+		driverPOV90.whenPressed(new LowerRobotFront());
+		driverPOV180.whileHeld(new DriveCarriage(0.6, 0.15));
+		driverPOV270.whenPressed(new LowerRobotRear());
 		driverBumperLeft.whenPressed(new RotateTo(-28.75)); // Near left rocket
 		driverLeftThrottleButton.whenActive(new RotateTo(-151.25)); // Far left rocket
 		driverBumperRight.whenPressed(new RotateTo(28.75)); // Near right rocket
@@ -105,23 +118,24 @@ public class OI {
 		//driverPOV90.whenPressed(new ResetGyro()); // Has been changed to a two button trigger
 		
 		//below this line is for secondary controller
-		/*secondaryA.whenPressed(new OpenJaws());//(new RaiseRobotRear());//whenPressed(new DriveCarriageFor(5, .25));
+		secondaryA.whenPressed(new OpenJaws());//(new RaiseRobotRear());//whenPressed(new DriveCarriageFor(5, .25));
 		secondaryB.whenPressed(new CloseJaws());
 		secondaryX.whenPressed(new PushHatchMechanism());
-		secondaryY.whenPressed(new PullHatchMechanism());*/
-		secondaryA.whenPressed(new RaiseRobotFront());
-		secondaryB.whenPressed(new LowerRobotFront());
-		secondaryX.whenPressed(new RaiseRobotRear());
-		secondaryY.whenPressed(new LowerRobotRear());
+		secondaryY.whenPressed(new PullHatchMechanism());
+		//secondaryA.whenPressed(new RaiseRobotFront());
+		//secondaryB.whenPressed(new LowerRobotFront());
+		//secondaryX.whenPressed(new RaiseRobotRear());
+		//secondaryY.whenPressed(new LowerRobotRear());
 		secondaryPOV0.whenPressed(new InitiateAlphaProtocol());
 		secondaryPOV180.whenPressed(new HabLevelTwoAuto());// HabLevelThreeAuto());
-		secondaryPOV270.whenPressed(new DriveCarriageFor(3, .25));//SmartResetHatchEncoder());
+		secondaryPOV270.whenPressed(new SmartResetHatchEncoder());
 		secondaryBumperLeft.whenPressed(new LowerRobotFrontAndRear());
-		secondaryBumperRight.whenPressed(new RaiseRobotFrontAndRear());
+		secondaryBumperRight.whileHeld(new ModulatedUpGroup());
 		// The below two are temporary
 		secondaryBack.whenPressed(new LimitDisengage());//HabLevelThreeAuto());
 		secondaryStart.whenPressed( new LimitEngage());
-
+		secondaryLJoyClick.whenPressed(new RaiseRobotRear());
+		secondaryRJoyClick.whenPressed(new RaiseRobotFront());
 
 
 		twoButtonTrigger.whenActive(new ResetGyro());

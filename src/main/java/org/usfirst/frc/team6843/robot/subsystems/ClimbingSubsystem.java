@@ -44,6 +44,8 @@ public class ClimbingSubsystem extends Subsystem {
   public ClimbingSubsystem(){
     LowerDriveMotor.setNeutralMode(NeutralMode.Brake);
     LowerDriveMotor.set(ControlMode.PercentOutput, 0.0);
+    rearSonic.setAutomaticMode(true);
+    frontSonic.setAutomaticMode(true);
   }
 
   @Override

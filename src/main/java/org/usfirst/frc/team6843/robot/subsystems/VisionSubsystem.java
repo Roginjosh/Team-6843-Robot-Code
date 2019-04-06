@@ -44,7 +44,7 @@ public class VisionSubsystem extends Subsystem {
   private int threadMiscount = 0;
 
   /**
-   * Updates the dashboard with drive subsystem critical data.
+   * Updates the dashboard with vision subsystem critical data.
    */
   public void updateDashboard() {
     SmartDashboard.putBoolean("Target data good", this.targetDataGood);

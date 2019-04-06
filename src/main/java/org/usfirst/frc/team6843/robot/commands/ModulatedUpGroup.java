@@ -10,21 +10,14 @@ package org.usfirst.frc.team6843.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class HabLevelTwoAuto extends CommandGroup {
+public class ModulatedUpGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public HabLevelTwoAuto() {
-    addSequential(new InitiateAlphaProtocol());
-    addSequential(new ModulatedRobotUp(7));
-    addSequential(new DriveToFrontLegs(0.6, 0.15));//DriveCarriageFor(10, 0.4));//DriveCarriageUntil(18, true));
-    addSequential(new LowerRobotFront());
-    addSequential(new WaitCommand(5));
-    addSequential(new DriveToRearLegs(0.6, 0.15));//DriveCarriageFor(10, 0.4)); //Until(2, true));
-    addSequential(new LowerRobotRear());
-    addSequential(new WaitCommand(5));
-    addSequential(new DriveTo(10));
-
-    
+  public ModulatedUpGroup() {
+   addParallel(new RaiseRobotFront());
+   addSequential(new WaitCommand(0.5));
+   addSequential(new RaiseRobotRear());
+   //addSequential(new ModulatedRobotUp(10.0));
   }
 }

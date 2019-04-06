@@ -13,46 +13,52 @@ import org.usfirst.frc.team6843.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ModulatedRobotUp extends Command {
-  protected ClimbingSubsystem climbingSubsystem;
-  protected DriveSubsystem driveSubsystem;
-  protected double timeout;
-  public ModulatedRobotUp(double time) {
-    timeout = time;
-    this.climbingSubsystem = Robot.getInstance().getClimbingSubsystem();
+public class DriveCarriage extends Command {
+  private final DriveSubsystem driveSubsystem;
+  private final ClimbingSubsystem climbingSubsystem;
+  private double botVelocity;
+  private double carriageVelocity;
+  public DriveCarriage(double carriageSpeed, double driveSpeed) {
     this.driveSubsystem = Robot.getInstance().getDriveSubsystem();
-    requires(this.climbingSubsystem);
-    requires(this.driveSubsystem);
+    this.climbingSubsystem = Robot.getInstance().getClimbingSubsystem();
+    requires(driveSubsystem);
+    requires(climbingSubsystem);
+    botVelocity = driveSpeed;
+    carriageVelocity = carriageSpeed;
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    this.climbingSubsystem.raiseFront();
-    this.climbingSubsystem.raiseRear();
-        setTimeout(timeout);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double pitch = this.driveSubsystem.getPitch();
-    if (pitch > -2.0) {   //was -0.05
-      this.climbingSubsystem.setMaster(true);      
-    } else if (pitch < -2.5) {   //was -0.75
-      this.climbingSubsystem.setMaster(false);   
-    }
+    this.climbingSubsystem.drive(-carriageVelocity);
+    this.driveSubsystem.arcadeDrive(botVelocity, 0);
   }
-  
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return isTimedOut();
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    this.climbingSubsystem.drive(0);
+    this.driveSubsystem.arcadeDrive(0, 0);
   }
 
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
+  @Override
+  protected void interrupted() {
+    this.climbingSubsystem.drive(0);
+    this.driveSubsystem.arcadeDrive(0, 0);
+  }
 }
