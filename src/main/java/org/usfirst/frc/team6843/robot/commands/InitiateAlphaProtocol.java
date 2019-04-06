@@ -14,12 +14,11 @@ public class InitiateAlphaProtocol extends CommandGroup {
    * Add your docs here.
    */
   public InitiateAlphaProtocol() {
-    addSequential(new CloseJaws());
+    addSequential(new OpenJaws());
     addSequential(new LimitDisengage());
     addParallel(new LowerRobotFront());
     addParallel(new LowerRobotRear());
-    addSequential(new ToggleHatchMechanism());
     addSequential(new SmartResetHatchEncoder());
-
+    
   }
 }

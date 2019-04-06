@@ -10,13 +10,12 @@ package org.usfirst.frc.team6843.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX; //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX; 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX; 
 
 import org.usfirst.frc.team6843.robot.RobotMap;
 import org.usfirst.frc.team6843.robot.commands.MoveHatchMechanism;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -31,6 +30,7 @@ public class HatchPanelSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private double linearOffset = 0;
+  private double manipulateOffsetVariable = 3.75;
   private Compressor compressor = new Compressor(RobotMap.COMPRESSOR);
   private Solenoid HatchJaws = new Solenoid(RobotMap.JAWS_SOLENOID);
   private DigitalInput LS1 = new DigitalInput(RobotMap.LIGHT_SENSOR_1);
@@ -45,7 +45,7 @@ public class HatchPanelSubsystem extends Subsystem {
   //private AnalogTrigger linearEncoderOutput = new AnalogTrigger(0);
   private Encoder linearEncoder = new Encoder(RobotMap.HATCH_LINEAR_ENCODER_PORT_1, RobotMap.HATCH_LINEAR_ENCODER_PORT_2);
   //private Counter linearEncoder = new Counter(EncodingType.k1X, new DigitalInput(RobotMap.HATCH_LINEAR_ENCODER_PORT_1), new DigitalInput(RobotMap.HATCH_LINEAR_ENCODER_PORT_2), false);
-  private WPI_VictorSPX linearSlideMotor = new WPI_VictorSPX(RobotMap.HATCH_SLIDE_MOTOR); // FIXME WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
+  private WPI_TalonSRX linearSlideMotor = new WPI_TalonSRX(RobotMap.HATCH_SLIDE_MOTOR); 
   private DoubleSolenoid MechanismEngage = new DoubleSolenoid(4, 5); //RobotMap.HATCH_MECHANISM_TOGGLE_PORT_1, RobotMap.HATCH_MECHANISM_TOGGLE_PORT_2);
   ///private Encoder linearEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   
@@ -66,6 +66,11 @@ public class HatchPanelSubsystem extends Subsystem {
   public void initDefaultCommand() {
     setDefaultCommand(new MoveHatchMechanism());
   }
+
+  public double getManipulatedOffsetValue() {
+    return manipulateOffsetVariable;
+  }
+
 
   public double locationOfLine() {
     double temp = 0, location = 0, amttemp = 0, interval = 1.25;
@@ -101,13 +106,13 @@ public class HatchPanelSubsystem extends Subsystem {
       return 0;
     } else {
     location = interval * (temp / amttemp);
-    return location-1;
+    return location;
     }
   }
   
   public void goToGoal(){
     if(!isThereALine()){  //There is no line to track to
-      if(Math.abs(linearPosition()) < .5){
+      if(Math.abs(linearPosition()) < 0.1){
         linearSlideMotor.set(ControlMode.PercentOutput, 0);
       } else if(linearPosition() < 0) {
         linearSlideMotor.set(ControlMode.PercentOutput, -.35);
@@ -221,7 +226,7 @@ public class HatchPanelSubsystem extends Subsystem {
   }
 //John has a smol pp
   public double linearPosition(){
-    return ((linearEncoder.get() * (-1.0/82.8)) + linearOffset);   //FIXME Majik Number
+    return ((linearEncoder.get() * (-1.0/82.8)) + linearOffset);   //OHNO Majik Number
   }
 
   public void clearLinearDistance(){
@@ -249,6 +254,10 @@ public class HatchPanelSubsystem extends Subsystem {
 
   public void PullMechanism(){
     MechanismEngage.set(Value.kReverse);
+  }
+
+  public void PushMechanism(){
+    MechanismEngage.set(Value.kForward);
   }
 
 }

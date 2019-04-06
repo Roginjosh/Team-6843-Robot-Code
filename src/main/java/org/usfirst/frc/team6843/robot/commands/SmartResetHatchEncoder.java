@@ -45,7 +45,7 @@ public class SmartResetHatchEncoder extends Command {
   @Override
   protected void end() {
     this.hatchPanelSubsystem.clearLinearDistance();
-    this.hatchPanelSubsystem.manipulateOffsetVariable(3.625);
+    this.hatchPanelSubsystem.manipulateOffsetVariable(this.hatchPanelSubsystem.getManipulatedOffsetValue());
   }
 
   // Called when another command which requires one or more of the same

@@ -32,8 +32,7 @@ public class VisionSubsystem extends Subsystem {
   public static final int IMAGE_HEIGHT = 240;
   public static final double CAMERA_FOV = 23.35;
   public static final double CAMERA_OFFSET = 0.0;
-  /** TODO Change this for 2019 robot! */
-  public static final double BUMPER_FRONT_TO_CAMERA_INCHES = 12.0;
+  public static final double BUMPER_FRONT_TO_CAMERA_INCHES = 8.0;
 
   private VisionThread visionThread;
   private Object targetDataLock = new Object();

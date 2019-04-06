@@ -8,19 +8,23 @@
 package org.usfirst.frc.team6843.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class LeaveHabLevelTwo extends CommandGroup {
+public class HabLevelTwoAuto extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public LeaveHabLevelTwo() {
+  public HabLevelTwoAuto() {
     addSequential(new InitiateAlphaProtocol());
-    addSequential(new DriveTo(-8));
-    addSequential(new RaiseRobotRear());
-    addSequential(new DriveToFrontLegs(.75));
-    addSequential(new RaiseRobotFront());
-    addSequential(new DriveToRearLegs(.75));
-    addSequential(new LowerRobotFrontAndRear());
+    addSequential(new ModulatedRobotUp(10));
+    addSequential(new DriveCarriageFor(10, 0.4));//DriveCarriageUntil(18, true));
+    addSequential(new LowerRobotFront());
+    addSequential(new WaitCommand(5));
+    addSequential(new DriveCarriageFor(10, 0.4)); //Until(2, true));
+    addSequential(new LowerRobotRear());
+    addSequential(new WaitCommand(5));
+    addSequential(new DriveTo(10));
+
     
   }
 }

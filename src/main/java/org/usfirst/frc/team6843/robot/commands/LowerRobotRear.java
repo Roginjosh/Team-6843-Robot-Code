@@ -22,12 +22,13 @@ public class LowerRobotRear extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    this.ClimbingSubsystem.setMaster(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    this.ClimbingSubsystem.raiseRear();
+    this.ClimbingSubsystem.lowerRear();
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -16,11 +16,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ModulatedRobotUp extends Command {
   protected ClimbingSubsystem climbingSubsystem;
   protected DriveSubsystem driveSubsystem;
-
-  public ModulatedRobotUp() {
+  protected double timeout;
+  public ModulatedRobotUp(double time) {
+    timeout = time;
     this.climbingSubsystem = Robot.getInstance().getClimbingSubsystem();
     this.driveSubsystem = Robot.getInstance().getDriveSubsystem();
     requires(this.climbingSubsystem);
+    requires(this.driveSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -28,20 +30,20 @@ public class ModulatedRobotUp extends Command {
   protected void initialize() {
     this.climbingSubsystem.raiseFront();
     this.climbingSubsystem.raiseRear();
-        setTimeout(20.0);
+        setTimeout(timeout);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     double pitch = this.driveSubsystem.getPitch();
-    if (pitch < .05) {
-      this.climbingSubsystem.setMaster(false);
-    } else if (pitch > .75) {
+    if (pitch > -1.4) {   //was -0.05
+      this.climbingSubsystem.setMaster(false);      
+    } else if (pitch < -1.8) {   //was -0.75
       this.climbingSubsystem.setMaster(true);   
     }
   }
-
+  
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {

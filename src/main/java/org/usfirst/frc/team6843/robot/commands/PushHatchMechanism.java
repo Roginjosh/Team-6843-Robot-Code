@@ -8,41 +8,42 @@
 package org.usfirst.frc.team6843.robot.commands;
 
 import org.usfirst.frc.team6843.robot.Robot;
-import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
+import org.usfirst.frc.team6843.robot.subsystems.HatchPanelSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveCarriageUntil extends Command {
-  protected ClimbingSubsystem climbingSubsystem;
-  double inches;
-  boolean direction;
+public class PushHatchMechanism extends Command {
+    HatchPanelSubsystem hatchPanelSubsystem;
+  public PushHatchMechanism() {
+    this.hatchPanelSubsystem = Robot.getInstance().getHatchPanelSubsystem();
+    requires(hatchPanelSubsystem);
+  }
 
-  public DriveCarriageUntil(double inchesFromWall, boolean forward) {
-    this.climbingSubsystem = Robot.getInstance().getClimbingSubsystem();
-    requires(climbingSubsystem);
-    this.inches = inchesFromWall;
-    this.direction = forward;
+  // Called just before this Command runs the first time
+  @Override
+  protected void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    this.climbingSubsystem.driveUntil(inches, direction);
+    this.hatchPanelSubsystem.PushMechanism();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(this.climbingSubsystem.getInchesFromWall() <= inches) {
-      return true;
-    } else {
-      return false;
-    }
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    this.climbingSubsystem.drive(0.0);
+  }
+
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
+  @Override
+  protected void interrupted() {
   }
 }

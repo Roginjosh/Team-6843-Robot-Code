@@ -31,11 +31,13 @@ public class RobotMap {
 	public static final int LIGHT_SENSOR_7 = 6;
 	public static final int HATCH_LINEAR_ENCODER_PORT_1 = 7;
 	public static final int HATCH_LINEAR_ENCODER_PORT_2 = 8;
-	public static final int CARRIAGE_ULTRASONIC_PORT_1 = 9;
-	public static final int CARRIAGE_ULTRASONIC_PORT_2 = 10;
+	public static final int REAR_ULTRASONIC_PORT_1 = 10;
+	public static final int REAR_ULTRASONIC_PORT_2 = 9;
 	public static final int LIMIT_ENGAGER = 11;
 	public static final int LEFT_HATCH_LIMIT = 12;
 	public static final int RIGHT_HATCH_LIMIT = 13;
+	public static final int FRONT_ULTRASONIC_PORT_1 = 19;
+	public static final int FRONT_ULTRASONIC_PORT_2 = 18;
 	//PCM Ports
 	public static final int FRONT_LEGS_PORT_1 = 0;
 	public static final int FRONT_LEGS_PORT_2 = 1;

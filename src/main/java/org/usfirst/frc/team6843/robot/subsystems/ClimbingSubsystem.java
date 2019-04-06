@@ -30,17 +30,20 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class ClimbingSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  private boolean atFrontLegs = false;
+  private boolean atRearLegs = false;
   private Compressor Compressor = new Compressor(RobotMap.COMPRESSOR);
   private DoubleSolenoid FrontLegs = new DoubleSolenoid(RobotMap.FRONT_LEGS_PORT_1, RobotMap.FRONT_LEGS_PORT_2);
   private DoubleSolenoid RearLegs = new DoubleSolenoid(RobotMap.REAR_LEGS_PORT_1, RobotMap.REAR_LEGS_PORT_2);
   private Solenoid MasterSolenoid = new Solenoid(RobotMap.MASTER_SOLENOID);
   private DigitalOutput SpikeLimit = new DigitalOutput(RobotMap.LIMIT_ENGAGER);
-//  private final WPI_TalonSRX LowerDriveMotor = new WPI_TalonSRX(RobotMap.LOWER_DRIVE_MOTOR_1);
-  private Ultrasonic carriageSonic = new Ultrasonic(RobotMap.CARRIAGE_ULTRASONIC_PORT_1, RobotMap.CARRIAGE_ULTRASONIC_PORT_2);
-  private boolean testt = false;
+  private final WPI_TalonSRX LowerDriveMotor = new WPI_TalonSRX(RobotMap.LOWER_DRIVE_MOTOR_1);
+  private Ultrasonic rearSonic = new Ultrasonic(RobotMap.REAR_ULTRASONIC_PORT_1, RobotMap.REAR_ULTRASONIC_PORT_2);
+  private Ultrasonic frontSonic = new Ultrasonic(RobotMap.FRONT_ULTRASONIC_PORT_1, RobotMap.FRONT_ULTRASONIC_PORT_2);
+  //private boolean testt = false;
   public ClimbingSubsystem(){
-//    LowerDriveMotor.setNeutralMode(NeutralMode.Brake);
-//    LowerDriveMotor.set(ControlMode.PercentOutput, 0.0);
+    LowerDriveMotor.setNeutralMode(NeutralMode.Brake);
+    LowerDriveMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
@@ -49,7 +52,7 @@ public class ClimbingSubsystem extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-
+/*
   public void test(){
     testt = !testt;
     
@@ -58,7 +61,7 @@ public class ClimbingSubsystem extends Subsystem {
   public boolean showtest() {
   return testt; 
 }
-
+*/
   public boolean rearDownOrNah() {
     if(RearLegs.get() == Value.kForward){
       return true;
@@ -88,11 +91,11 @@ public class ClimbingSubsystem extends Subsystem {
   }
 
   public void raiseRear(){ //For raising rear legs of robot, should make "RearLegs" be in forward position
-  RearLegs.set(Value.kReverse);
+  RearLegs.set(Value.kForward);
   }
 
   public void lowerRear(){ //For lowering Rear legs of robot, should make "RearLegs" be in reverse position
-  RearLegs.set(DoubleSolenoid.Value.kForward);
+  RearLegs.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void toggleLimit(){
@@ -109,7 +112,7 @@ public class ClimbingSubsystem extends Subsystem {
   }
 
   public void setMaster(boolean on) {
-    MasterSolenoid.set(!on);
+    MasterSolenoid.set(on);
   }
 
   public void limitDisengage(){
@@ -117,20 +120,23 @@ public class ClimbingSubsystem extends Subsystem {
   }
 
   public void updateDashboard(){
-   /* SmartDashboard.putBoolean("6in. Limit Engaged?", SpikeLimit.get());
+    
+    //SmartDashboard.putBoolean("6in. Limit Engaged?", SpikeLimit.get());
     SmartDashboard.putBoolean("Are Tanks Pressurized?", pressureSwitch());
     SmartDashboard.putBoolean("Is Rear down?", isRearDown());
     SmartDashboard.putBoolean("Is Front down?", isFrontDown());
-    SmartDashboard.putBoolean("test", showtest());
-    SmartDashboard.putBoolean("Master Solenoid", MasterSolenoid.get()); */
+    SmartDashboard.putBoolean("Master Solenoid", MasterSolenoid.get());
+    SmartDashboard.putNumber("Front Ultrasonic", frontSonic.getRangeInches());
+    SmartDashboard.putNumber("Rear Ultrasonic", rearSonic.getRangeInches());
   }
+  
 
   public void drive(double speed){
-//    LowerDriveMotor.set(ControlMode.PercentOutput, speed);
+    LowerDriveMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void driveTo(double position){
-//    LowerDriveMotor.set(ControlMode.Position, position);
+    LowerDriveMotor.set(ControlMode.Position, position);
   }
   
   public boolean isFrontDown(){
@@ -165,18 +171,38 @@ public class ClimbingSubsystem extends Subsystem {
     }
   }
 
-  public void driveUntil(double limit, boolean direction){
-    if ((carriageSonic.getRangeInches() <= limit) && direction) {
-//      LowerDriveMotor.set(ControlMode.PercentOutput, .25);
-    } else if((carriageSonic.getRangeInches() >= limit) && !direction) {
-//      LowerDriveMotor.set(ControlMode.PercentOutput, -.25);
-      } else {
-//      LowerDriveMotor.set(ControlMode.PercentOutput, 0);
+  public void driveToFrontLegs(double speed){
+    if(frontSonic.getRangeInches() < 6){
+      LowerDriveMotor.set(ControlMode.PercentOutput, 0);
+      atFrontLegs = true;
+    } else {
+      LowerDriveMotor.set(ControlMode.PercentOutput, speed);
     }
   }
 
-  public double getInchesFromWall(){
-    return carriageSonic.getRangeInches();
+  public boolean getAtFrontLegs(){
+    return atFrontLegs;
+  }
+
+  public void changeAtFrontLegs(boolean value){
+    atFrontLegs = value;
+  }
+
+  public void driveToRearLegs(double speed){
+    if(rearSonic.getRangeInches() < 6){
+      LowerDriveMotor.set(ControlMode.PercentOutput, 0);
+      atRearLegs = true;
+    } else {
+      LowerDriveMotor.set(ControlMode.PercentOutput, speed);
+    }
+  }
+  
+  public boolean getAtRearLegs(){
+    return atRearLegs;
+  }
+
+  public void changeAtRearLegs(boolean value){
+    atRearLegs = value;
   }
 
   public boolean pressureSwitch(){ // returns false if tanks are lower than 120psi

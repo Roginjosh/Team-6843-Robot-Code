@@ -28,9 +28,9 @@ public class RaiseRobotFrontAndRear extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    this.climbingSubsystem.setMaster(false);
-    this.climbingSubsystem.lowerFront();
-    this.climbingSubsystem.lowerRear();
+    this.climbingSubsystem.setMaster(true);
+    this.climbingSubsystem.raiseFront();
+    this.climbingSubsystem.raiseRear();
   }
 
   // Make this return true when this Command no longer needs to run execute()

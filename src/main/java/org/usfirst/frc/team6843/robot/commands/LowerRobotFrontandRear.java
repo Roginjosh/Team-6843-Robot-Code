@@ -11,10 +11,10 @@ import org.usfirst.frc.team6843.robot.Robot;
 import org.usfirst.frc.team6843.robot.subsystems.ClimbingSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LowerRobotFrontandRear extends Command {
+public class LowerRobotFrontAndRear extends Command {
   protected ClimbingSubsystem climbingSubsystem;
 
-  public LowerRobotFrontandRear() {
+  public LowerRobotFrontAndRear() {
     this.climbingSubsystem = Robot.getInstance().getClimbingSubsystem();
 
   }
@@ -27,8 +27,9 @@ public class LowerRobotFrontandRear extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    this.climbingSubsystem.raiseFront();
-    this.climbingSubsystem.raiseRear();
+    this.climbingSubsystem.setMaster(true);
+    this.climbingSubsystem.lowerFront();
+    this.climbingSubsystem.lowerRear();
   }
 
   // Make this return true when this Command no longer needs to run execute()
