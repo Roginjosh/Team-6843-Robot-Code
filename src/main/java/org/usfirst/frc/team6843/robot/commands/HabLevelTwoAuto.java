@@ -16,13 +16,14 @@ public class HabLevelTwoAuto extends CommandGroup {
    */
   public HabLevelTwoAuto() {
     addSequential(new InitiateAlphaProtocol());
-    addSequential(new ModulatedRobotUp(7));
-    addSequential(new DriveToFrontLegs(0.6, 0.15));//DriveCarriageFor(10, 0.4));//DriveCarriageUntil(18, true));
-    addSequential(new LowerRobotFront());
-    addSequential(new WaitCommand(5));
-    addSequential(new DriveToRearLegs(0.6, 0.15));//DriveCarriageFor(10, 0.4)); //Until(2, true));
-    addSequential(new LowerRobotRear());
-    addSequential(new WaitCommand(5));
+    addSequential(new TimedRaiseRobotFront());
+    addSequential(new TimedRaiseRobotRear());
+    addSequential(new DriveCarriageFor(2, 0.6, 0.15));
+    addSequential(new DriveCarriageFor(0.25, -0.6, -0.15));
+    addSequential(new TimedLowerRobotFront());
+    addSequential(new DriveCarriageFor(3, 0.6, 0.15));
+    addSequential(new DriveCarriageFor(0.25, -0.6, -0.15));
+    addSequential(new TimedLowerRobotRear());
     addSequential(new DriveTo(10));
 
     
