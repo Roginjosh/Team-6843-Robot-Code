@@ -115,9 +115,9 @@ public class HatchPanelSubsystem extends Subsystem {
       if(Math.abs(linearPosition()) < 0.1){
         linearSlideMotor.set(ControlMode.PercentOutput, 0);
       } else if(linearPosition() < 0) {
-        linearSlideMotor.set(ControlMode.PercentOutput, -.35);
+        linearSlideMotor.set(ControlMode.PercentOutput, -.75);
       } else if (linearPosition() > 0) {
-        linearSlideMotor.set(ControlMode.PercentOutput, .35); }
+        linearSlideMotor.set(ControlMode.PercentOutput, .75); }
     } else {     //There is a line
       if((linearPosition() > locationOfLine()) && !onLine() && !getLeftHatchLimit()){
         linearSlideMotor.set(ControlMode.PercentOutput, .35);

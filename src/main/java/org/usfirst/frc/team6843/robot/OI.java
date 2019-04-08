@@ -20,6 +20,7 @@ import org.usfirst.frc.team6843.robot.commands.HabLevelThreeAuto;
 import org.usfirst.frc.team6843.robot.commands.HabLevelTwoAuto;
 import org.usfirst.frc.team6843.robot.commands.InitiateAlphaProtocol;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
+import org.usfirst.frc.team6843.robot.commands.LeaveHabLevelTwo;
 import org.usfirst.frc.team6843.robot.commands.LimitDisengage;
 import org.usfirst.frc.team6843.robot.commands.LimitEngage;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotFront;
@@ -122,10 +123,10 @@ public class OI {
 		secondaryB.whenPressed(new CloseJaws());
 		secondaryX.whenPressed(new PushHatchMechanism());
 		secondaryY.whenPressed(new PullHatchMechanism());
-		//secondaryA.whenPressed(new RaiseRobotFront());
-		//secondaryB.whenPressed(new LowerRobotFront());
-		//secondaryX.whenPressed(new RaiseRobotRear());
-		//secondaryY.whenPressed(new LowerRobotRear());
+		// secondaryA.whenPressed(new RaiseRobotFront());
+		// secondaryB.whenPressed(new LowerRobotFront());
+		// secondaryX.whenPressed(new RaiseRobotRear());
+		// secondaryY.whenPressed(new LowerRobotRear());
 		secondaryPOV0.whenPressed(new InitiateAlphaProtocol());
 		secondaryPOV180.whenPressed(new HabLevelTwoAuto());// HabLevelThreeAuto());
 		secondaryPOV270.whenPressed(new SmartResetHatchEncoder());
@@ -134,7 +135,7 @@ public class OI {
 		// The below two are temporary
 		secondaryBack.whenPressed(new LimitDisengage());//HabLevelThreeAuto());
 		secondaryStart.whenPressed( new LimitEngage());
-		secondaryLJoyClick.whenPressed(new RaiseRobotRear());
+secondaryLJoyClick.whenPressed(new LeaveHabLevelTwo());
 		secondaryRJoyClick.whenPressed(new RaiseRobotFront());
 
 
