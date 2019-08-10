@@ -7,16 +7,9 @@
 
 package org.usfirst.frc.team6843.robot;
 
-import org.usfirst.frc.team6843.robot.commands.RotateTo;
-import org.usfirst.frc.team6843.robot.commands.SmartResetHatchEncoder;
-import org.usfirst.frc.team6843.robot.triggers.TwoButtonTrigger;
-import org.usfirst.frc.team6843.robot.commands.LowerRobotFrontAndRear;
-import org.usfirst.frc.team6843.robot.commands.LowerRobotRear;
 import org.usfirst.frc.team6843.robot.commands.ApproachTarget;
 import org.usfirst.frc.team6843.robot.commands.CloseJaws;
 import org.usfirst.frc.team6843.robot.commands.DriveCarriage;
-import org.usfirst.frc.team6843.robot.commands.DriveCarriageFor;
-import org.usfirst.frc.team6843.robot.commands.HabLevelThreeAuto;
 import org.usfirst.frc.team6843.robot.commands.HabLevelTwoAuto;
 import org.usfirst.frc.team6843.robot.commands.InitiateAlphaProtocol;
 import org.usfirst.frc.team6843.robot.commands.KillAll;
@@ -24,23 +17,24 @@ import org.usfirst.frc.team6843.robot.commands.LeaveHabLevelTwo;
 import org.usfirst.frc.team6843.robot.commands.LimitDisengage;
 import org.usfirst.frc.team6843.robot.commands.LimitEngage;
 import org.usfirst.frc.team6843.robot.commands.LowerRobotFront;
-import org.usfirst.frc.team6843.robot.commands.RaiseRobotFrontAndRear;
-import org.usfirst.frc.team6843.robot.commands.RaiseRobotRear;
-import org.usfirst.frc.team6843.robot.commands.ModulatedRobotUp;
+import org.usfirst.frc.team6843.robot.commands.LowerRobotFrontAndRear;
+import org.usfirst.frc.team6843.robot.commands.LowerRobotRear;
+import org.usfirst.frc.team6843.robot.commands.ModulatedUpGroup;
 import org.usfirst.frc.team6843.robot.commands.OpenJaws;
 import org.usfirst.frc.team6843.robot.commands.PullHatchMechanism;
 import org.usfirst.frc.team6843.robot.commands.PushHatchMechanism;
 import org.usfirst.frc.team6843.robot.commands.RaiseRobotFront;
 import org.usfirst.frc.team6843.robot.commands.ResetGyro;
 import org.usfirst.frc.team6843.robot.commands.ResetRotatedToTarget;
-import org.usfirst.frc.team6843.robot.commands.ModulatedUpGroup;
-
+import org.usfirst.frc.team6843.robot.commands.RotateTo;
+import org.usfirst.frc.team6843.robot.commands.SmartResetHatchEncoder;
+import org.usfirst.frc.team6843.robot.triggers.TwoButtonTrigger;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator

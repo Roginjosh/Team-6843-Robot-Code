@@ -8,7 +8,6 @@
 package org.usfirst.frc.team6843.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class HabLevelTwoAuto extends CommandGroup {
   /**

@@ -49,7 +49,7 @@ public class DriveTo extends Command {
     if (Math.abs(deltaAngle) > 45.0) {
       deltaAngle = 0.0;
     }
-    double p = deltaAngle < 0.0 ? 0.05 : 0.025; // TODO check on new bot
+    double p = deltaAngle < 0.0 ? 0.05 : 0.025;
     double turnRate = p * deltaAngle;
     double turnFactor = speed * turnRate;
     this.driveSubsystem.velocityDrive(speed - turnFactor, -(speed + turnFactor));
